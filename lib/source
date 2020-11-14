@@ -1,0 +1,51 @@
+DEF="../defconfig"
+PAT="../patches"
+CC="../patches/cc"
+NC="../patches/nc"
+ML="../patches/ml"
+MLCC="../patches/ml/cc"
+MLNC="../patches/ml/nc"
+UP="../patches/userpatches"
+TPI4="../output/traditional"
+FPI4="../output/foundation"
+SRC="sources"
+
+CORES=`nproc`
+KERNEL="linux-rpi"
+MLKERNEL="linux"
+# do not edit above this line
+
+# debian
+DEBIANIMGSIZE="3975MB"
+DEBIANIMGSIZE_BULLSEYE="5050MB"
+
+XFCE1="tzdata keyboard-configuration sudo man-db dbus initramfs-tools \
+	e2fsprogs fonty-rg patch curl wget apt-transport-https dirmngr \
+	cmake rsync psmisc parted pv zip unzip aria2 u-boot-tools hdparm git"
+
+XFCE2="cpu hwinfo haveged resolvconf git build-essential net-tools ifplugd \
+	fuse wpasupplicant wireless-tools usbutils alsa-utils gettext \
+	bison flex mc nano figlet toilet dialog python3 python3-setuptools \
+	openssh-client openssh-server ntfs-3g bc zram-tools libncursesw5-dev \
+	libssl-dev autopoint autoconf automake pkg-config libtool fake-hwclock \
+	avahi-utils plymouth-themes lightdm-gtk-greeter lightdm chromium"
+
+XFCE3="xfce4 xinit thunar mousepad gvfs-backends gvfs-fuse gnome-screensaver feh \
+	xfce4-terminal avahi-utils pulseaudio blueman xfce4-goodies file-roller \
+	network-manager network-manager-gnome fbi"
+
+# firmware
+FIRMWARE="firmware-linux-nonfree firmware-linux firmware-misc-nonfree \
+          firmware-realtek firmware-ralink"
+
+# https://archive.raspberrypi.org/debian/pool/main/r/rpi-eeprom/
+EEPROM_VERSION="10.2"
+
+# motd
+BRAND="Raspberry Pi"
+
+# extra
+module_sig(){
+echo CONFIG_MODULE_SIG=y >> arch/arm64/configs/bcm2711_defconfig
+echo CONFIG_MODULE_SIG_KEY='"'certs/signing_key.pem'"' >> arch/arm64/configs/bcm2711_defconfig
+}

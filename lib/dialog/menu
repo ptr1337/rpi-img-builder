@@ -1,0 +1,7 @@
+#!/bin/bash
+if `grep -Fx "uboot=1" "userdata.txt" >/dev/null;`
+	then chmod +x lib/dialog/traditional && ./lib/dialog/traditional;
+fi
+if `grep -Fx "uboot=0" "userdata.txt" >/dev/null;`
+	then chmod +x lib/dialog/foundation && ./lib/dialog/foundation;
+fi

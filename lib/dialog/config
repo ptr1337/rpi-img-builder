@@ -1,0 +1,84 @@
+#!/bin/bash
+### DO NOT EDIT
+RED="\e[0;31m"
+FIN="\e[0m"
+DISTRO_VERSION="bullseye"
+VERSION="5.9.y"
+menuconfig="0"
+crosscompile="1"
+UBOOT_VERSION="v2020.10"
+uboot="0"
+debian="1"
+rtl88XXau="0"
+rtl88X2bu="0"
+rtl88XXcu="0"
+
+# open fd
+exec 3>&1
+
+# Store data to $VALUES variable
+VALUES=$(dialog --ok-label "Submit" --no-cancel \
+	  --backtitle "Raspberry Pi Image Builder" \
+	  --title "Config Menu" \
+	  --form "Choose:" \
+22 40 16 \
+	"Linux kernel"	1 1	""	 		1 14 0 0 \
+        "Branch:"   	2 1     "$VERSION"        	2 9 7 0 \
+	"Menuconfig:"	3 1	"$menuconfig"  		3 13 2 0 \
+	"Crosscompile:" 4 1	"$crosscompile" 	4 15 2 0 \
+	""		5 1	""	 		5 14 0 0 \
+	"U-Boot:"	6 1	"$uboot"	 	6 9 2 0 \
+	"Version:"	7 1	"$UBOOT_VERSION"  	7 10 15 0 \
+	""		8 1	""	 		8 14 0 0 \
+	"Distribution"	9 1	""	 		9 14 0 0 \
+	"Release:"	10 1	"$DISTRO_VERSION"  	10 10 15 0 \
+	"Debian:"	11 1	"$debian" 		11 9 2 0 \
+	""		12 1	""	 		12 14 0 0 \
+	"Wireless"	13 1	""	 		13 14 0 0 \
+	"rtl88XXau:"	14 1	"$rtl88XXau"	 	14 12 2 0 \
+	"rtl88X2bu:"	15 1	"$rtl88X2bu"	 	15 12 2 0 \
+	"rtl88XXcu:"	16 1	"$rtl88XXcu"	 	16 12 2 0 \
+2>&1 1>&3)
+
+# close fd
+exec 3>&-
+
+# convert into vars
+echo "$VALUES" > tmp1
+echo VERSION='"' >> tmp0
+echo menuconfig= >> tmp0
+echo crosscompile= >> tmp0
+echo uboot= >> tmp0
+echo UBOOT_VERSION='"' >> tmp0
+echo DISTRO_VERSION='"' >> tmp0
+echo debian= >> tmp0
+echo rtl8812au= >> tmp0
+echo rtl88x2bu= >> tmp0
+echo rtl8811cu= >> tmp0
+echo custom_defconfig=0 >> tmp0
+echo MYCONFIG='"'nameofyour_defconfig'"' >> tmp0
+echo verbose=0 >> tmp0
+echo xfce=1 >> tmp0
+echo admin=1 >> tmp0
+echo '"' >> tmp2
+echo >> tmp2
+echo >> tmp2
+echo >> tmp2
+echo '"' >> tmp2
+echo '"' >> tmp2
+paste -d '\0' tmp0 tmp1 tmp2  > userdata.txt
+rm -f tmp0 tmp1 tmp2
+
+# categories
+sed -i '1i### LINUX KERNEL' userdata.txt
+sed -i '5i### UBOOT SUPPORT' userdata.txt
+sed -i '8i### DISTRIBUTIONS' userdata.txt
+sed -i '11i### WIRELESS' userdata.txt
+sed -i '15i### CUSTOM' userdata.txt
+sed -i '19i### DO NOT EDIT BELOW THIS LINE' userdata.txt
+
+# clear screen
+clear
+
+# userdata
+echo -e "${RED}userdata file created${FIN}."

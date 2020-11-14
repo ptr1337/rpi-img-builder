@@ -1,0 +1,137 @@
+partitions(){
+fdisk "${IMAGE_FOLDER}${IMAGE_FILE_NAME}" <<EOF
+o
+n
+p
+1
+2048
+524287
+a
+c
+t
+b
+n
+p
+2
+524288
+
+p
+w
+
+EOF
+IMAGE_LOOP_DEV="$(losetup --show -f ${IMAGE_FOLDER}${IMAGE_FILE_NAME})"
+IMAGE_LOOP_DEV_BOOT="${IMAGE_LOOP_DEV}p1"
+IMAGE_LOOP_DEV_ROOTFS="${IMAGE_LOOP_DEV}p2"
+partprobe "${IMAGE_LOOP_DEV}"
+mkfs.vfat -n BOOT "${IMAGE_LOOP_DEV_BOOT}"
+mkfs.ext4 -L ROOTFS "${IMAGE_LOOP_DEV_ROOTFS}"
+mkdir -p p1 p2
+mount "${IMAGE_LOOP_DEV_BOOT}" p1
+mount "${IMAGE_LOOP_DEV_ROOTFS}" p2
+sync
+umount p2
+mount -o defaults,noatime "${IMAGE_LOOP_DEV_ROOTFS}" p2
+}
+
+create_fstab(){
+tee p2/etc/fstab <<EOF
+UUID=${BOOT_UUID}	/boot		vfat    defaults 0 2
+UUID=${ROOT_UUID}	/		ext4	defaults,noatime,nodiratime,commit=600,errors=remount-ro 0 1
+tmpfs	/tmp		tmpfs	defaults,nosuid 0 0
+EOF
+}
+
+bcm2711_eeprom(){
+echo
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+echo Checking for updates.
+apt update
+echo
+echo Installing rpi-eeprom.
+sleep 1s
+apt install help2man rsync pciutils -y
+###
+mkdir -p ~/eeprom
+mv -f rpi-eeprom-update.patch /root/eeprom/
+mv -f rpi-eeprom-control.patch /root/eeprom/
+cd ~/eeprom
+wget -cq --show-progress https://archive.raspberrypi.org/debian/pool/main/r/rpi-eeprom/rpi-eeprom_${EEPROM_VERSION}-1.debian.tar.xz
+wget -cq --show-progress https://archive.raspberrypi.org/debian/pool/main/r/rpi-eeprom/rpi-eeprom_${EEPROM_VERSION}.orig.tar.gz
+tar xf rpi-eeprom_${EEPROM_VERSION}.orig.tar.gz
+tar xf rpi-eeprom_${EEPROM_VERSION}-1.debian.tar.xz
+rm -f rpi-eeprom_${EEPROM_VERSION}-1.debian.tar.xz
+mkdir -p debian/patches
+mv rpi-eeprom-update.patch debian/patches/rpi-eeprom-update.patch 
+echo rpi-eeprom-update.patch >> debian/patches/series
+mv -f debian rpi-eeprom-${EEPROM_VERSION}/
+mv rpi-eeprom-control.patch rpi-eeprom-${EEPROM_VERSION}/
+cd rpi-eeprom-${EEPROM_VERSION}
+patch -p1 < rpi-eeprom-control.patch
+rm -f rpi-eeprom-control.patch
+dpkg-buildpackage -us -nc -uc
+cd ..
+dpkg -i *.deb
+cd ..
+rm -fdr eeprom
+echo Done.
+}
+
+armv8_userland(){
+echo
+echo Adding raspi userland.
+rm -f /etc/profile
+mv -f profile /etc/profile
+mv rpi-vc.conf /etc/ld.so.conf.d/rpi-vc.conf
+chown root:root /etc/profile
+chown root:root /etc/ld.so.conf.d/rpi-vc.conf
+sleep 1s
+mkdir -p /opt
+git clone https://github.com/raspberrypi/userland.git
+mv -f userland-remove-hi-pi.patch /root/userland/
+cd userland
+patch -p1 < userland-remove-hi-pi.patch
+rm -f userland-remove-hi-pi.patch
+./buildme --aarch64
+cd ~
+rm -f -d -R userland
+ldconfig
+echo Done.
+}
+
+bcm_modules(){
+echo
+echo Updating etc modules.
+rm -f /etc/modules
+tee /etc/modules <<EOF
+# /etc/modules: kernel modules to load at boot time.
+#
+# This file contains the names of kernel modules that should be loaded
+# at boot time, one per line. Lines beginning with "#" are ignored.
+#bcm2835-v4l2
+#i2c-dev
+
+EOF
+chown root:root /etc/modules
+echo Done.
+}
+
+mesa_install(){
+echo
+echo Installing Mesa 20.3
+apt install -y llvm-dev ninja-build meson libvdpau-dev libxvmc-dev libva-dev libomxil-bellagio-dev python3-mako libdrm-nouveau2 libdrm-dev wayland-protocols libwayland-egl-backend-dev libunwind-dev libxdamage-dev libxcb-glx0-dev libxcb-shm0-dev libx11-xcb-dev libxcb-dri2-0-dev libxcb-dri3-dev libxcb-present-dev libxshmfence-dev libxxf86vm-dev libxrandr-dev valgrind mpv
+
+cd ~
+mkdir mesa
+cd mesa
+aria2c -c https://gitlab.freedesktop.org/mesa/mesa/-/archive/20.3/mesa-20.3.tar.gz
+tar xf mesa-20.3.tar.gz
+rm -f mesa-20.3.tar.gz
+mkdir -p mesa-20.3/build
+cd mesa-20.3/build
+meson --prefix=/usr -Dglx=disabled -Dplatforms=drm -Dllvm=disabled -Dvulkan-drivers='' -Ddri-drivers='' -Dgallium-drivers=vc4,v3d,kmsro ..
+ninja install
+apt purge -y --autoremove llvm-dev ninja-build meson
+cd ~
+rm -fdr mesa
+echo Done.
+}

@@ -1,0 +1,154 @@
+#!/bin/bash
+source lib/function/universal
+source lib/function/debian
+source lib/function/boot
+source lib/function/echoes
+source lib/source
+source userdata.txt > /dev/null 2>&1
+UD=userdata.txt
+
+userdata () {
+echo ""
+echo "Please create a userdata.txt file"
+while [ true ] ; do
+read -t 20 -n 1
+if [ $? = 0 ] ; then
+exit ;
+else
+echo "run make config"
+fi
+done
+}
+
+if [ -f "$UD" ]; then
+    echo ""
+    echo "$UD file found." > /dev/null 2>&1
+else 
+    userdata
+fi
+if `grep -Fx "verbose=1" "userdata.txt" >/dev/null;`
+	then set -eux -o pipefail;
+	else set -eu -o pipefail;
+fi
+if ls /usr/bin/toilet > /dev/null 2>&1
+	then toilet -f small --filter metal 'Raspberry Pi';
+	else echo -e "${RED}Raspberry Pi Image Builder${FIN}";
+fi
+RAM=0
+PROXY=""
+IMAGE_FOLDER="img/"
+if `grep -Fx "uboot=1" "userdata.txt" >/dev/null;`
+	then DEVICE_SOC="rpi-4-xfce";
+fi
+if `grep -Fx "uboot=0" "userdata.txt" >/dev/null;`
+	then DEVICE_SOC="bcm2711-xfce";
+fi
+IMAGE_DATE="$(date +%F)"
+IMAGE_FILE_NAME="${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img"
+if [ $RAM -ne 0 ]; then
+	IMAGE_FOLDER="ram/"
+fi
+mkdir -p "$IMAGE_FOLDER"
+if [ $RAM -ne 0 ]; then
+	mount -t tmpfs -o size=6G tmpfs $IMAGE_FOLDER
+fi
+
+if `grep -Fx "verbose=1" "userdata.txt" >/dev/null;`
+	then select_size;
+	else select_size > /dev/null 2>&1;
+fi
+
+if `grep -Fx "verbose=1" "userdata.txt" >/dev/null;`
+	then partition_uuid;
+	else partition_uuid > /dev/null 2>&1;
+fi
+
+if `grep -Fx "uboot=1" "userdata.txt" >/dev/null;`
+	then uboot_desktop;
+fi
+if `grep -Fx "uboot=0" "userdata.txt" >/dev/null;`
+	then foundation_desktop;
+fi 
+
+### clean boot bits
+rm -f firmware/boot/*
+
+### extract rootfs
+aarch64_rootfs
+
+mkdir -p p2/etc/apt/apt.conf.d p2/etc/dpkg/dpkg.cfg.d
+echo "force-unsafe-io" > "p2/etc/dpkg/dpkg.cfg.d/dpkg-unsafe-io"
+
+mkdir -p p2/usr/bin
+cp $(which "qemu-aarch64-static") p2/usr/bin
+
+if `grep -Fx "verbose=1" "userdata.txt" >/dev/null;`
+	then distro_release;
+	else distro_release > /dev/null 2>&1;
+fi
+if `grep -Fx "verbose=1" "userdata.txt" >/dev/null;`
+	then create_fstab;
+	else create_fstab > /dev/null 2>&1;
+fi
+
+if [ -n "$PROXY" ] ; then
+	tee "p2/etc/apt/apt.conf.d/30proxy" <<EOF
+Acquire::http::proxy "http://127.0.0.1:3142";
+EOF
+fi
+
+# setup stage2
+cp scripts/debian-stage2 p2/root
+cp lib/function/debian p2/root/debian.txt
+cp lib/function/universal p2/root/universal.txt
+cp lib/source p2/root/source.txt
+cp userdata.txt p2/root
+cp soc.txt p2/root
+if `grep -Fx "uboot=0" "userdata.txt" >/dev/null;`
+	then cp output/foundation/*.deb p2/root;
+fi
+if `grep -Fx "uboot=1" "userdata.txt" >/dev/null;`
+	then cp output/traditional/{*.deb,*.bin} p2/root;
+fi
+cp files/misc/* p2/root
+cp files/patches/* p2/root
+cp files/rules/* p2/root
+cp files/scripts/* p2/root
+cp files/users/* p2/root
+xfce4_configs
+cp firmware/fw-0a5c_21e8.hcd p2/root
+echo -e "${RED}Starting chroot${FIN} ..."
+# Mount and chroot
+mount -o bind p1 p2/boot
+mount -o bind /dev p2/dev
+mount -o bind /dev/pts p2/dev/pts
+chroot p2 /root/debian-stage2
+# unmount
+umount p2/dev/pts
+umount p2/dev
+umount p2/boot
+
+rm p2/usr/bin/qemu-aarch64-static
+rm p2/root/debian-stage2
+rm -f p2/root/*.txt
+rm -f p2/var/cache/debconf/*
+
+if [ -n "$PROXY" ] ; then
+	rm p2/etc/apt/apt.conf.d/30proxy
+fi
+rm p2/etc/dpkg/dpkg.cfg.d/dpkg-unsafe-io
+
+### Finish
+e4defrag -c p2
+
+umount p2
+umount p1
+
+losetup -d "${IMAGE_LOOP_DEV}"
+mv "${IMAGE_FOLDER}${IMAGE_FILE_NAME}" "${IMAGE_FILE_NAME}"
+if [ $RAM -ne 0 ]; then
+	umount "${IMAGE_FOLDER}"
+fi
+rmdir "${IMAGE_FOLDER}"
+rmdir p1 p2
+rm -f part-uuid.txt soc.txt

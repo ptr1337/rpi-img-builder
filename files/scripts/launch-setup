@@ -1,0 +1,3 @@
+#!/bin/bash
+sleep 7s
+xfce4-terminal --hide-menubar --hide-scrollbar --fullscreen --execute run-setup
