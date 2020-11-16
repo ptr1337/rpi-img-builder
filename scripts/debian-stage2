@@ -43,12 +43,10 @@ mkdir -p /usr/local/sbin
 if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
 	then led_service
 fi
-if `grep -Fx "bcm2710" "/root/soc.txt" >/dev/null;`
-	then led_service
-fi
 mv -f run-setup /usr/local/bin/
 mv -f sysinfo /usr/local/bin/
 mv -f smon /usr/local/bin/
+mv -f sleep-locker /usr/local/bin/
 case `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null; echo $?` in
   0)
 	wget -cq --show-progress https://raw.githubusercontent.com/pyavitz/scripts/master/write2usb
