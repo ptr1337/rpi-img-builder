@@ -1,4 +1,4 @@
-## Image Builder for the Raspberry Pi | Xfce4 Edition
+## Image Builder for the Raspberry Pi | Xfce Edition
 ### This branch is under testing so build at ur own risk.
 
 The boards and distributions that are currently supported;
@@ -7,6 +7,8 @@ The boards and distributions that are currently supported;
 ## Progress
 Currently I'm using Mesa 20.3-rc1 with mpv in order to get full screen play back at 720p/1080p (x264). Test images can be
 found under the [release](https://github.com/pyavitz/rpi-img-builder/releases/tag/images) section.
+
+![Screeenshot](https://i.imgur.com/Hqnr0gX.png)
 
 ## Dependencies
 
