@@ -109,6 +109,9 @@ apt install -y ${XFCE2} ${FIRMWARE};
 ### Plymouth theme
 plymouth_theme
 
+### ZSWAP
+zramswap_config
+
 #### Adding firmware
 echo
 echo Adding pi firmware.
