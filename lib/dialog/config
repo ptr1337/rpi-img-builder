@@ -55,6 +55,7 @@ echo debian= >> tmp0
 echo rtl8812au= >> tmp0
 echo rtl88x2bu= >> tmp0
 echo rtl8811cu= >> tmp0
+echo networkmanager=1 >> tmp0
 echo custom_defconfig=0 >> tmp0
 echo MYCONFIG='"'nameofyour_defconfig'"' >> tmp0
 echo verbose=0 >> tmp0
@@ -74,8 +75,8 @@ sed -i '1i### LINUX KERNEL' userdata.txt
 sed -i '5i### UBOOT SUPPORT' userdata.txt
 sed -i '8i### DISTRIBUTIONS' userdata.txt
 sed -i '11i### WIRELESS' userdata.txt
-sed -i '15i### CUSTOM' userdata.txt
-sed -i '19i### DO NOT EDIT BELOW THIS LINE' userdata.txt
+sed -i '16i### CUSTOM' userdata.txt
+sed -i '20i### DO NOT EDIT BELOW THIS LINE' userdata.txt
 
 # clear screen
 clear

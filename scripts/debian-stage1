@@ -110,6 +110,12 @@ fi
 if `grep -Fx "uboot=1" "userdata.txt" >/dev/null;`
 	then cp output/traditional/{*.deb,*.bin} p2/root;
 fi
+if `grep -Fx "networkmanager=0" "userdata.txt" >/dev/null;`
+	then cp files/network/{networking_credentials,networking_credentials.txt} p2/root;
+fi
+if `grep -Fx "networkmanager=1" "userdata.txt" >/dev/null;`
+	then cp files/network/{networkmanager_credentials,networkmanager_credentials.txt} p2/root;
+fi
 cp files/misc/* p2/root
 cp files/patches/* p2/root
 cp files/rules/* p2/root

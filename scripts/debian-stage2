@@ -56,7 +56,12 @@ case `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null; echo $?` in
     ;;
 esac
 mv -f growpart /usr/bin/
-mv -f credentials /usr/local/bin/
+if `grep -Fx "networkmanager=0" "/root/userdata.txt" >/dev/null;`
+	then mv -f networking_credentials /usr/local/bin/credentials ;
+fi
+if `grep -Fx "networkmanager=1" "/root/userdata.txt" >/dev/null;`
+	then mv -f networkmanager_credentials /usr/local/bin/credentials ;
+fi
 wget -cq --show-progress https://raw.githubusercontent.com/pyavitz/scripts/master/swh
 mv -f swh /usr/local/bin/
 wget -cq --show-progress https://raw.githubusercontent.com/pyavitz/scripts/master/fetch
@@ -165,7 +170,12 @@ mv -f 99-com.rules /lib/udev/rules.d/99-com.rules
 echo Done.
 
 ### Network Setup
-desktop_network
+if `grep -Fx "networkmanager=0" "/root/userdata.txt" >/dev/null;`
+	then networking;
+fi
+if `grep -Fx "networkmanager=1" "/root/userdata.txt" >/dev/null;`
+	then networkmanager;
+fi
 
 ### MOTD instructions
 echo

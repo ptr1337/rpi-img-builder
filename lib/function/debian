@@ -273,35 +273,6 @@ rm -fdr brogit-plymouth-theme
 echo Done.
 }
 
-desktop_network(){
-echo
-echo Adding network configs and rules.
-sleep 1s
-rm -f /etc/network/interfaces
-mkdir -p /etc/udev/rules.d
-mv -f 80-net-setup-link.rules /etc/udev/rules.d/80-net-setup-link.rules
-chown root:root /etc/udev/rules.d/80-net-setup-link.rules
-mv -f credentials.txt /boot/rename_to_credentials.txt
-cp -f soc.txt /etc/opt/
-chown root:root /etc/opt/soc.txt
-
-tee /etc/network/interfaces <<EOF
-### Interfaces
-source /etc/network/interfaces.d/*
-
-### Loopback network interface
-auto lo
-iface lo inet loopback
-
-EOF
-
-tee /etc/wpa_supplicant/wpa_supplicant.conf <<EOF
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-
-EOF
-echo Done.
-}
-
 install_xfce(){
 echo
 echo Installing desktop packages.
@@ -309,7 +280,12 @@ sleep 1s
 apt -y clean
 apt -y autoclean
 apt update
-apt install -y ${XFCE3}
+if `grep -Fx "networkmanager=0" "/root/userdata.txt" >/dev/null;`
+	then apt install -y ${XFCE3};
+fi
+if `grep -Fx "networkmanager=1" "/root/userdata.txt" >/dev/null;`
+	then apt install -y ${XFCE3} network-manager network-manager-gnome ;
+fi
 apt purge -y light-locker
 echo Done.
 

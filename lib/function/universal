@@ -130,8 +130,141 @@ mkdir -p mesa-20.3/build
 cd mesa-20.3/build
 meson --prefix=/usr -Dglx=disabled -Dplatforms=drm -Dllvm=disabled -Dvulkan-drivers='' -Ddri-drivers='' -Dgallium-drivers=vc4,v3d,kmsro ..
 ninja install
-apt purge -y --autoremove llvm-dev ninja-build meson
 cd ~
 rm -fdr mesa
+apt purge -y --autoremove ninja-build meson
+echo Done.
+}
+
+networking(){
+echo
+echo Adding network configs and rules.
+sleep 1s
+rm -f /etc/network/interfaces
+mkdir -p /etc/udev/rules.d
+mv -f 80-net-setup-link.rules /etc/udev/rules.d/80-net-setup-link.rules
+chown root:root /etc/udev/rules.d/80-net-setup-link.rules
+mv -f networking_credentials.txt /boot/rename_to_credentials.txt
+cp -f soc.txt /etc/opt/
+chown root:root /etc/opt/soc.txt
+
+tee /etc/opt/interfaces.manual <<EOF
+### Interfaces
+source /etc/network/interfaces.d/*
+
+### Loopback network interface
+auto lo
+iface lo inet loopback
+
+### Ethernet
+allow-hotplug eth0
+iface eth0 inet dhcp
+    #address 10.0.0.10
+    #netmask 255.255.255.0
+    #gateway 10.0.0.1
+    #dns-nameservers 8.8.8.8 8.8.4.4
+
+### Mobile tether
+#allow-hotplug usb0
+#iface usb0 inet dhcp
+
+### Wifi
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+	wireless-power off
+	#address 10.0.0.10
+	#netmask 255.255.255.0
+	#gateway 10.0.0.1
+	#dns-nameservers 8.8.8.8 8.8.4.4
+	wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+
+EOF
+
+tee /etc/opt/interfaces <<EOF
+### Interfaces
+source /etc/network/interfaces.d/*
+
+### Loopback network interface
+auto lo
+iface lo inet loopback
+
+### Ethernet
+allow-hotplug eth0
+iface eth0 inet dhcp
+    #address 10.0.0.10
+    #netmask 255.255.255.0
+    #gateway 10.0.0.1
+    #dns-nameservers 8.8.8.8 8.8.4.4
+
+### Mobile tether
+#allow-hotplug usb0
+#iface usb0 inet dhcp
+
+### Wifi
+allow-hotplug wlan0
+iface wlan0 inet dhcp
+	wireless-power off
+	wlan_address 10.0.0.10
+	wlan_netmask 255.255.255.0
+	wlan_gateway 10.0.0.1
+	wlan_dns-nameservers 8.8.8.8 8.8.4.4
+	wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+
+EOF
+
+tee /etc/opt/wpa_supplicant.manual <<EOF
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=US
+
+network={
+	ssid="mywifissid"
+	scan_ssid=1
+	key_mgmt=WPA-PSK
+	psk="wifipasskey"
+}
+EOF
+
+tee /etc/opt/wpa_supplicant.conf <<EOF
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+country=
+
+network={
+	name=
+	scan_ssid=1
+	key_mgmt=WPA-PSK
+	password=
+}
+EOF
+echo Done.
+}
+
+networkmanager(){
+echo
+echo Adding network configs and rules.
+sleep 1s
+rm -f /etc/network/interfaces
+mkdir -p /etc/udev/rules.d
+mv -f 80-net-setup-link.rules /etc/udev/rules.d/80-net-setup-link.rules
+chown root:root /etc/udev/rules.d/80-net-setup-link.rules
+mv -f networkmanager_credentials.txt /boot/rename_to_credentials.txt
+cp -f soc.txt /etc/opt/
+chown root:root /etc/opt/soc.txt
+
+tee /etc/network/interfaces <<EOF
+### Interfaces
+source /etc/network/interfaces.d/*
+
+### Loopback network interface
+auto lo
+iface lo inet loopback
+
+EOF
+
+tee /etc/wpa_supplicant/wpa_supplicant.conf <<EOF
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+
+EOF
 echo Done.
 }

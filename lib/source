@@ -17,7 +17,7 @@ MLKERNEL="linux"
 
 # debian
 DEBIANIMGSIZE="3975MB"
-DEBIANIMGSIZE_BULLSEYE="5050MB"
+DEBIANIMGSIZE_BULLSEYE="5250MB"
 
 XFCE1="tzdata keyboard-configuration sudo man-db dbus initramfs-tools \
 	e2fsprogs fonty-rg patch curl wget apt-transport-https dirmngr \
@@ -32,7 +32,7 @@ XFCE2="cpu hwinfo haveged resolvconf git build-essential net-tools ifplugd \
 
 XFCE3="xfce4 xinit thunar mousepad gvfs-backends gvfs-fuse gnome-screensaver feh \
 	xfce4-terminal avahi-utils pulseaudio blueman xfce4-goodies file-roller \
-	network-manager network-manager-gnome fbi"
+	fbi"
 
 # firmware
 FIRMWARE="firmware-linux-nonfree firmware-linux firmware-misc-nonfree \
