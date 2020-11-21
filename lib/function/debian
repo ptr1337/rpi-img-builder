@@ -304,7 +304,9 @@ uinitrd(){
 cd ~
 echo
 echo Adding uInitrd script.
+mkdir -p /usr/lib/u-boot
 mkdir -p /etc/initramfs/post-update.d/
+mv -f u-boot.bin /usr/lib/u-boot/
 mv -f 99-uboot /etc/initramfs/post-update.d/
 chmod +x /etc/initramfs/post-update.d/99-uboot
 chown root:root /etc/initramfs/post-update.d/99-uboot
