@@ -84,7 +84,7 @@ Patches "-p1" placed in patches/userpatches are applied during compilation.
 
 ```sh
 # AARCH64
-make all
+make all	# U-boot (if selected) > Kernel > rootfs > image
 make uboot
 make kernel
 make rootfs

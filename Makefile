@@ -1,7 +1,6 @@
 # menu
 MENU=./lib/dialog/menu
 CONF=./lib/dialog/config
-MLCONF=./lib/dialog/ml_config
 DIALOGRC=$(shell cp -f lib/dialogrc ~/.dialogrc)
 
 # rootfs
@@ -12,8 +11,6 @@ ROOTFSV8=sudo ./scripts/rootfsv8
 SELECT=./scripts/select
 XLINUX=./scripts/linux
 LINUX=sudo ./scripts/linux
-XMAINLINE=./scripts/mainline
-MAINLINE=sudo ./scripts/mainline
 XUBOOT=./scripts/uboot
 UBOOT=sudo ./scripts/uboot
 
@@ -59,14 +56,10 @@ commands:
 	@echo
 	@echo "bcm2711:"
 	@echo " "
+	@echo "  make all                U-boot (if selected) > Kernel > rootfs > image"
+	@echo "  make uboot              Builds u-boot"
 	@echo "  make kernel             Builds linux kernel"
 	@echo "  make image              Make bootable image"
-	@echo "  make all                Kernel > rootfs > image"
-	@echo
-	@echo "Mainline:"
-	@echo
-	@echo "  make mlconfig		  Create user data file"
-	@echo "  make mainline		  Builds mainline linux kernel"
 	@echo
 	@echo "Root filesystem:"
 	@echo
@@ -95,6 +88,17 @@ ncompile:
 	aria2 pv toilet figlet gcc-arm-none-eabi
 
 # Raspberry Pi 4 | aarch64
+all:
+	# Reading user data file ...
+	@chmod +x ${SELECT}
+	@${SELECT}
+
+uboot:
+	# Linux | aarch64
+	@ echo bcm2711 > soc.txt
+	@chmod +x ${XUBOOT}
+	@${UBOOT}
+
 kernel:
 	# Linux | aarch64
 	@ echo bcm2711 > soc.txt
@@ -107,14 +111,14 @@ image:
 	@chmod +x ${CHOOSE}
 	@${CHOOSE}
 
-all:
+foundation:
 	# RPi4B | aarch64
 	# - - - - - - - -
 	#
 	# Building linux
 	@ echo bcm2711 > soc.txt
-	@chmod +x ${SELECT}
-	@${SELECT}
+	@chmod +x ${XLINUX}
+	@${LINUX}
 	# Creating ROOTFS tarball
 	@chmod +x ${RFSV8}
 	@${ROOTFSV8}
@@ -122,23 +126,26 @@ all:
 	@ echo bcm2711 > soc.txt
 	@chmod +x ${CHOOSE}
 	@${CHOOSE}
-
-mainline:
-	# Mainline Linux | aarch64
-	@ echo Currently not supported.
-	@ echo
-
-#mainline:
-#	# Mainline Linux | aarch64
-#	@ echo bcm2711 > soc.txt
-#	@chmod +x ${XMAINLINE}
-#	@${MAINLINE}
 	
-uboot:
-	# Linux | aarch64
+traditional:
+	# RPi4B | aarch64
+	# - - - - - - - -
+	#
+	# Building uboot
 	@ echo bcm2711 > soc.txt
 	@chmod +x ${XUBOOT}
 	@${UBOOT}
+	# Building linux
+	@ echo bcm2711 > soc.txt
+	@chmod +x ${XLINUX}
+	@${LINUX}
+	# Creating ROOTFS tarball
+	@chmod +x ${RFSV8}
+	@${ROOTFSV8}
+	# Making bootable image
+	@ echo bcm2711 > soc.txt
+	@chmod +x ${CHOOSE}
+	@${CHOOSE}
 
 # rootfs
 rootfs:

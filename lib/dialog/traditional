@@ -46,7 +46,6 @@ while true; do
       echo "Program terminated."
       ;;
     1 )
-      make uboot
       make all
       dialog --prgbox "Results:" "ls rpi-4-*.img *aarch64* $OUTPUT/" 30 60
       exit 0
