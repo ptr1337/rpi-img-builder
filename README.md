@@ -5,7 +5,7 @@ The boards and distributions that are currently supported;
 * Raspberry Pi 4B/400 (bcm2711) | Debian Bullseye
 
 ## Progress
-Currently I'm using Mesa 20.3-rc1 with mpv in order to get full screen play back at 720p/1080p (x264). Test images can be
+Currently I'm using [Mesa 20.3](https://gitlab.freedesktop.org/mesa/mesa/-/archive/20.3/mesa-20.3.tar.gz) (frankenbuild). [MPV](https://mpv.io/) can do full screen play back at 720p/1080p (x264). Test images can be
 found under the [release](https://github.com/pyavitz/rpi-img-builder/releases/tag/images) section.
 
 ![Screeenshot](https://i.imgur.com/Hqnr0gX.png)
@@ -117,7 +117,7 @@ DNS=""				# Your preferred dns
 
 ```
 
-#### Using deb-eeprom and [usb_storage.quirks](https://github.com/pyavitz/rpi-img-builder/issues/17)
+#### Using deb-eeprom ([usb_storage.quirks](https://github.com/pyavitz/rpi-img-builder/issues/17))
 
 ```sh
 Raspberry Pi 4B EEPROM Helper Script
