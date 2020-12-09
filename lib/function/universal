@@ -128,7 +128,7 @@ tar xf mesa-20.3.tar.gz
 rm -f mesa-20.3.tar.gz
 mkdir -p mesa-20.3/build
 cd mesa-20.3/build
-meson --prefix=/usr -Dglx=disabled -Dplatforms=drm -Dllvm=disabled -Dvulkan-drivers='' -Ddri-drivers='' -Dgallium-drivers=vc4,v3d,kmsro ..
+meson --prefix=/usr -Dglx=disabled -Dplatforms=auto -Dllvm=disabled -Dvulkan-drivers='' -Ddri-drivers='' -Dgallium-drivers=vc4,v3d,kmsro ..
 ninja install
 cd ~
 rm -fdr mesa
