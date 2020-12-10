@@ -15,6 +15,10 @@ echo_cuboot(){
 echo -e "${RED}Compiling uboot${FIN}."
 }
 
+echo_compress(){
+echo -e "${RED}Compressing image${FIN}."
+}
+
 echo_extract () {
 echo -e "${RED}Extracting archive${FIN}."
 }
