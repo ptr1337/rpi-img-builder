@@ -115,6 +115,9 @@ IPADDR=" "			# Static ip address
 GATEWAY=" "			# Your Gateway
 DNS=""				# Your preferred dns
 
+CHANGE=n			# Set to y to enable
+HOSTNAME="raspberrypi"
+BRANDING="Raspberry Pi"
 ```
 
 #### Using deb-eeprom ([usb_storage.quirks](https://github.com/pyavitz/rpi-img-builder/issues/17))
