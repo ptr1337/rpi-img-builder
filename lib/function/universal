@@ -271,7 +271,7 @@ paste -d '\0' kernel1 kernel2 kernel3  > /root/kernel.txt
 rm -f kernel1 kernel2 kernel3
 }
 
-vivaldi_install(){
+install_vivaldi(){
 VIVALDI_VERSION="3.5.2115.81-1"
 echo
 echo Installing Vivaldi.
@@ -281,8 +281,8 @@ apt install -y fonts-liberation
 wget -cq --show-progress https://downloads.vivaldi.com/stable/vivaldi-stable_${VIVALDI_VERSION}_arm64.deb
 dpkg -i vivaldi-stable_${VIVALDI_VERSION}_arm64.deb
 rm -f vivaldi-stable_${VIVALDI_VERSION}_arm64.deb
-rm -f /etc/apt/sources.list.d/*
 apt -y clean
 apt -y autoclean
+rm -f /etc/apt/sources.list.d/vivaldi.list
 echo Done.
 }
