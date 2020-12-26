@@ -273,7 +273,6 @@ fi
 ###  Raspi userland
 armv8_userland
 
-
 ### Adding eeprom
 bcm2711_eeprom
 
@@ -287,7 +286,8 @@ apt -y autoclean
 echo Done.
 
 ### Install desktop
-install_xfce;
+install_xfce
+vivaldi_install
 
 ### Modules
 if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`

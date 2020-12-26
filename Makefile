@@ -30,6 +30,11 @@ CLEAN=sudo ./scripts/clean
 PURGE=$(shell sudo rm -fdr sources)
 PURGEALL=$(shell sudo rm -fdr sources output)
 
+# help
+XCHECK=./scripts/check
+CHECK=./scripts/check
+
+
 help:
 	@echo
 	@echo "\e[1;31mRaspberry Pi Image Builder\e[0m"
@@ -68,6 +73,7 @@ commands:
 	@echo "Miscellaneous:"
 	@echo
 	@echo "  make dialogrc		  Set builder theme"
+	@echo "  make check		  Shows latest revision of selected branch"
 	@echo
 
 # aarch64
@@ -96,7 +102,7 @@ all:
 	@${SELECT}
 
 uboot:
-	# Linux | aarch64
+	# U-boot | aarch64
 	@ echo bcm2711 > soc.txt
 	@chmod +x ${XUBOOT}
 	@${UBOOT}
@@ -183,25 +189,17 @@ config:
 	@chmod +x ${CONF}
 	@${CONF}
 
-mlconfig:
-	# User config menu
-	@ echo Currently not supported.
-	@ echo
-
-#mlconfig:
-#	# User config menu
-#	@chmod go=rx files/scripts/*
-#	@chmod go=r files/misc/*
-#	@chmod go=r files/rules/*
-#	@chmod go=r files/users/*
-#	@chmod +x ${MLCONF}
-#	@${MLCONF}
-
+# miscellaneous
 dialogrc:
 	# Builder theme set
 	@${DIALOGRC}
 
-# Raspberry Pi 4 Select
+check:
+	# Check kernel revisions
+	@chmod +x ${XCHECK}
+	@${CHECK}
+
+# raspberry pi 4 select
 select:
 	# Selecting kernel
 	@chmod +x ${SELECT}
