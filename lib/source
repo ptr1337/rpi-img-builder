@@ -26,7 +26,7 @@ XFCE2="cpu hwinfo haveged resolvconf git build-essential net-tools ifplugd \
 	openssh-client openssh-server ntfs-3g bc zram-tools libncursesw5-dev \
 	libssl-dev autopoint autoconf automake pkg-config libtool fake-hwclock \
 	avahi-utils plymouth-themes lightdm-gtk-greeter lightdm distro-info-data \
-	lsb-release"
+	lsb-release libell0"
 
 XFCE3="xfce4 xinit thunar mousepad gvfs-backends gvfs-fuse gnome-screensaver feh \
 	xfce4-terminal avahi-utils pulseaudio blueman xfce4-goodies file-roller \
