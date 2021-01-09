@@ -30,7 +30,7 @@ XFCE2="cpu hwinfo haveged resolvconf git build-essential net-tools ifplugd \
 
 XFCE3="xfce4 xinit thunar mousepad gvfs-backends gvfs-fuse gnome-screensaver feh \
 	xfce4-terminal avahi-utils pulseaudio blueman xfce4-goodies file-roller \
-	fbi"
+	fbi alacarte firefox-esr"
 
 # firmware
 FIRMWARE="firmware-linux-nonfree firmware-linux firmware-misc-nonfree \
