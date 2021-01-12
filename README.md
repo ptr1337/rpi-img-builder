@@ -2,8 +2,7 @@
 
 ---
 
-## Image Builder for the Raspberry Pi
-### Armhf/Armel Branch
+## Image Builder for the Raspberry Pi | Armhf Branch
 
 ## The boards and distributions that are currently supported
 * Raspberry Pi 4B (bcm2711) | Debian, Devuan and Ubuntu
