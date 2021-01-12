@@ -56,12 +56,8 @@ rm -f /etc/opt/root-pid.txt
 }
 
 fix_cmdline(){
-if `grep -Fx "bcm2708" "/etc/opt/soc.txt" >/dev/null;`
-	then partition_uuid > /dev/null 2>&1;
-fi
-if `grep -Fx "bcm2708" "/etc/opt/soc.txt" >/dev/null;`
-	then create_cmdline > /dev/null 2>&1;
-fi
+partition_uuid > /dev/null 2>&1
+create_cmdline > /dev/null 2>&1
 }
 
 ### Grow Partition

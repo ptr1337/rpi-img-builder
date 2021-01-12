@@ -6,8 +6,8 @@ ADMIN=./lib/dialog/admin_config
 DIALOGRC=$(shell cp -f lib/dialogrc ~/.dialogrc)
 
 # rootfs
-RFSV8=./scripts/rootfsv8
-ROOTFSV8=sudo ./scripts/rootfsv8
+RFSV7=./scripts/rootfsv7
+ROOTFSV7=sudo ./scripts/rootfsv7
 RFSV6=./scripts/rootfsv6
 ROOTFSV6=sudo ./scripts/rootfsv6
 
@@ -43,8 +43,6 @@ PURGE=$(shell sudo rm -fdr source)
 PURGEALL=$(shell sudo rm -fdr source output)
 
 # help
-XHELPER=./scripts/help
-HELPER=sudo ./scripts/help
 XCHECK=./scripts/check
 CHECK=./scripts/check
 
@@ -99,7 +97,7 @@ commands:
 	@echo
 	@echo "Root filesystem:"
 	@echo
-	@echo "  make rootfs		  arm64"
+	@echo "  make rootfs		  armhf"
 	@echo "  make rootfsv6		  armel"
 	@echo
 	@echo "Miscellaneous:"
@@ -109,13 +107,13 @@ commands:
 	@echo "  make helper		  Reduce the time it takes to create a new image"
 	@echo
 
-# aarch64
+# armv7
 ccompile:
 	# Install all dependencies:
 	sudo apt install build-essential bison bc git dialog patch \
 	dosfstools zip unzip qemu debootstrap qemu-user-static rsync \
 	kmod cpio flex libssl-dev libncurses5-dev parted fakeroot swig \
-	aria2 pv toilet figlet crossbuild-essential-arm64 crossbuild-essential-armel \
+	aria2 pv toilet figlet crossbuild-essential-armhf crossbuild-essential-armel \
 	distro-info-data lsb-release xz-utils curl
 
 ncompile:
@@ -125,9 +123,9 @@ ncompile:
 	kmod cpio flex libssl-dev libncurses5-dev parted fakeroot swig \
 	aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl
 
-# Raspberry Pi 4 | aarch64
+# Raspberry Pi 4 | armv7
 kernel:
-	# Linux | aarch64
+	# Linux | armv7
 	@ echo bcm2711 > soc.txt
 	@chmod +x ${XLINUX}
 	@${LINUX}
@@ -139,7 +137,7 @@ image:
 	@${CHOOSE}
 
 all:
-	# RPi4B | aarch64
+	# RPi4B | armv7
 	# - - - - - - - -
 	#
 	# Building linux
@@ -147,22 +145,22 @@ all:
 	@chmod +x ${SELECT}
 	@${SELECT}
 	# Creating ROOTFS tarball
-	@chmod +x ${RFSV8}
-	@${ROOTFSV8}
+	@chmod +x ${RFSV7}
+	@${ROOTFSV7}
 	# Making bootable image
 	@ echo bcm2711 > soc.txt
 	@chmod +x ${CHOOSE}
 	@${CHOOSE}
 
 mainline:
-	# Mainline Linux | aarch64
+	# Mainline Linux | armv7
 	@ echo bcm2711 > soc.txt
 	@chmod +x ${XMAINLINE}
 	@${MAINLINE}
 
-# Raspberry Pi 3 | aarch64
+# Raspberry Pi 3 | armv7
 rpi3-kernel:
-	# Linux | aarch64
+	# Linux | armv7
 	@ echo bcm2710 > soc.txt
 	@chmod +x ${XLINUX}
 	@${LINUX}
@@ -174,7 +172,7 @@ rpi3-image:
 	@${CHOOSE}
 
 rpi3-all:
-	# RPi3B/+ | aarch64
+	# RPi3B/+ | armv7
 	# - - - - - - - -
 	#
 	# Building linux
@@ -182,8 +180,8 @@ rpi3-all:
 	@chmod +x ${XLINUX}
 	@${LINUX}
 	# Creating ROOTFS tarball
-	@chmod +x ${RFSV8}
-	@${ROOTFSV8}
+	@chmod +x ${RFSV7}
+	@${ROOTFSV7}
 	# Making bootable image
 	@ echo bcm2710 > soc.txt
 	@chmod +x ${CHOOSE}
@@ -221,8 +219,8 @@ rpi-all:
 # rootfs
 rootfs:
 	# ROOTFS
-	@chmod +x ${RFSV8}
-	@${ROOTFSV8}
+	@chmod +x ${RFSV7}
+	@${ROOTFSV7}
 
 rootfsv6:
 	# ROOTFS
@@ -333,24 +331,3 @@ ubuntuos:
 	@chmod +x ${UBU}
 	@chmod +x ${UBUSTG2}
 	@${UBUNTU}
-
-# kernel helper
-helper:
-	# Helper script
-	@chmod +x ${XHELPER}
-	@${HELPER} -h
-
-2708:
-	# BCM2708
-	@chmod +x ${XHELPER}
-	@${HELPER} -1
-
-2710:
-	# BCM2710
-	@chmod +x ${XHELPER}
-	@${HELPER} -3
-
-2711:
-	# BCM2711
-	@chmod +x ${XHELPER}
-	@${HELPER} -4

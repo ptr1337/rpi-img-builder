@@ -103,10 +103,10 @@ rm -f firmware/boot/*
 
 ### extract rootfs
 if `grep -Fx "bcm2711" "soc.txt" >/dev/null;`
-	then aarch64_rootfs;
+	then armhf_rootfs;
 fi
 if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
-	then aarch64_rootfs;
+	then armhf_rootfs;
 fi
 if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
 	then armel_rootfs;
@@ -116,15 +116,7 @@ mkdir -p p2/etc/apt/apt.conf.d p2/etc/dpkg/dpkg.cfg.d
 echo "force-unsafe-io" > "p2/etc/dpkg/dpkg.cfg.d/dpkg-unsafe-io"
 
 # qemu static
-if `grep -Fx "bcm2711" "soc.txt" >/dev/null;`
-	then qemu_arm64;
-fi
-if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
-	then qemu_arm64;
-fi
-if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
-	then qemu_arm;
-fi
+qemu_arm
 
 if `grep -Fx "verbose=1" "userdata.txt" >/dev/null;`
 	then distro_release;
@@ -180,15 +172,7 @@ umount p2/dev
 umount p2/boot
 
 # qemu remove static
-if `grep -Fx "bcm2711" "soc.txt" >/dev/null;`
-	then qemu_arm64_remove;
-fi
-if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
-	then qemu_arm64_remove;
-fi
-if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
-	then qemu_arm_remove;
-fi
+qemu_arm_remove
 cp -f p2/root/kernel.txt .
 rm p2/root/devuan-stage2
 rm -f p2/root/*.txt

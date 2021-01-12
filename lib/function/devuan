@@ -45,17 +45,17 @@ if `grep -Fx 'DISTRO_VERSION="unstable"' "userdata.txt" >/dev/null;`
 fi
 }
 
-aarch64_extract(){
-tar -xf devuan-${DISTRO_VERSION}-rootfs-aarch64.tar.xz -C p2/
+armhf_extract(){
+tar -xf devuan-${DISTRO_VERSION}-rootfs-armhf.tar.xz -C p2/
 }
 
 armel_extract(){
 tar -xf devuan-${DISTRO_VERSION}-rootfs-armel.tar.xz -C p2/
 }
 
-aarch64_rootfs(){
-if ls devuan-${DISTRO_VERSION}-rootfs-aarch64.tar.xz > /dev/null 2>&1
-	then echo -n "Extracting rootfs " && aarch64_extract && echo_bdone;
+armhf_rootfs(){
+if ls devuan-${DISTRO_VERSION}-rootfs-armhf.tar.xz > /dev/null 2>&1
+	then echo -n "Extracting rootfs " && armhf_extract && echo_bdone;
 	else echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
 fi
 echo
@@ -703,16 +703,16 @@ BLUEZ_VERSION="5.55"
 echo
 echo Upgrading bluetooth.
 sleep 1s
-wget -cq --show-progress https://github.com/pyavitz/binary/releases/download/060420/bluez-${BLUEZ_VERSION}-debian-arm64.tar.xz
-tar xf bluez-${BLUEZ_VERSION}-debian-arm64.tar.xz
-rm -f bluez-${BLUEZ_VERSION}-debian-arm64.tar.xz
-cd bluez-${BLUEZ_VERSION}-debian-arm64
+wget -cq --show-progress https://github.com/pyavitz/binary/releases/download/060420/bluez-${BLUEZ_VERSION}-debian-armhf.tar.xz
+tar xf bluez-${BLUEZ_VERSION}-debian-armhf.tar.xz
+rm -f bluez-${BLUEZ_VERSION}-debian-armhf.tar.xz
+cd bluez-${BLUEZ_VERSION}-debian-armhf
 rm -f *dbgsym_${BLUEZ_VERSION}*
 rm -f *cups_${BLUEZ_VERSION}*
 rm -f *source_${BLUEZ_VERSION}*
 dpkg -i *.deb
 cd ..
-rm -fdR bluez-${BLUEZ_VERSION}-debian-arm64
+rm -fdR bluez-${BLUEZ_VERSION}-debian-armhf
 apt-mark hold bluez
 echo Done.
 }
@@ -722,16 +722,16 @@ BLUEZ_UNSTABLE_VERSION="5.55"
 echo
 echo Upgrading bluetooth.
 sleep 1s
-wget -cq --show-progress https://github.com/pyavitz/binary/releases/download/060420/bluez-${BLUEZ_UNSTABLE_VERSION}-debian-unstable-arm64.tar.xz
-tar xf bluez-${BLUEZ_UNSTABLE_VERSION}-debian-unstable-arm64.tar.xz
-rm -f bluez-${BLUEZ_UNSTABLE_VERSION}-debian-unstable-arm64.tar.xz
-cd bluez-${BLUEZ_UNSTABLE_VERSION}-debian-unstable-arm64
+wget -cq --show-progress https://github.com/pyavitz/binary/releases/download/060420/bluez-${BLUEZ_UNSTABLE_VERSION}-debian-unstable-armhf.tar.xz
+tar xf bluez-${BLUEZ_UNSTABLE_VERSION}-debian-unstable-armhf.tar.xz
+rm -f bluez-${BLUEZ_UNSTABLE_VERSION}-debian-unstable-armhf.tar.xz
+cd bluez-${BLUEZ_UNSTABLE_VERSION}-debian-unstable-armhf
 rm -f *dbgsym_${BLUEZ_UNSTABLE_VERSION}*
 rm -f *cups_${BLUEZ_UNSTABLE_VERSION}*
 rm -f *source_${BLUEZ_UNSTABLE_VERSION}*
 dpkg -i *.deb
 cd ..
-rm -fdR bluez-${BLUEZ_UNSTABLE_VERSION}-debian-unstable-arm64
+rm -fdR bluez-${BLUEZ_UNSTABLE_VERSION}-debian-unstable-armhf
 apt-mark hold bluez
 echo Done.
 }

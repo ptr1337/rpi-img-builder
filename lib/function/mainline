@@ -41,7 +41,7 @@ download_mainline(){
 	then rtl8811cu;
     fi
     cd ${MLKERNEL}-${VERSION}
-    export ARCH=arm64
+    export ARCH=arm
 }
 
 download_stable(){
@@ -75,7 +75,7 @@ download_stable(){
 	then rtl8811cu;
     fi
     cd ${MLKERNEL}-${VERSION}
-    export ARCH=arm64
+    export ARCH=arm
 }
 
 userpatches (){
@@ -113,20 +113,20 @@ patching(){
 
 cconfig(){
     echo_cconfig
-    cp -f ../${DEF}/${MYCONFIG} arch/arm64/configs/
-    make ARCH=arm64 ${MYCONFIG}
+    cp -f ../${DEF}/${MYCONFIG} arch/arm/configs/
+    make ARCH=arm ${MYCONFIG}
     echo_done
 }
 
 rpi_config(){
     echo_fconfig
-    cp -f ../${DEF}/bcm2711_defconfig arch/arm64/configs/
-    echo CONFIG_MODULE_SIG=y >> arch/arm64/configs/bcm2711_defconfig
-    echo CONFIG_MODULE_SIG_KEY='"'certs/signing_key.pem'"' >> arch/arm64/configs/bcm2711_defconfig
+    cp -f ../${DEF}/bcm2711_defconfig arch/arm/configs/
+    echo CONFIG_MODULE_SIG=y >> arch/arm/configs/bcm2711_defconfig
+    echo CONFIG_MODULE_SIG_KEY='"'certs/signing_key.pem'"' >> arch/arm/configs/bcm2711_defconfig
     rtl8812au_module
     rtl88x2bu_module
     rtl8811cu_module
-    make ARCH=arm64 bcm2711_defconfig &> /dev/null
+    make ARCH=arm bcm2711_defconfig &> /dev/null
     echo_done
 }
 
@@ -140,14 +140,14 @@ menu_config(){
 cross_compile(){
     echo -e "-- ${GRN}CC${FIN}"
     echo_build
-    echo 'y' | make -j${CORES} ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bindeb-pkg
+    echo 'y' | make -j${CORES} ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bindeb-pkg
     rm -f ../*libc*.deb
 }
 
 native_compile(){
     echo -e "-- ${GRN}NC${FIN}"
     echo_build
-    echo 'y' | make -j${CORES} ARCH=arm64 bindeb-pkg
+    echo 'y' | make -j${CORES} ARCH=arm bindeb-pkg
     rm -f ../*libc*.deb
 }
 
@@ -175,7 +175,7 @@ ${MLKERNEL}-${VERSION}/drivers/net/wireless/Kconfig
 
 rtl8812au_select(){
 if `grep -Fx "bcm2711" "../../soc.txt" >/dev/null;`
-	then echo CONFIG_88XXAU=m >> arch/arm64/configs/bcm2711_defconfig ;
+	then echo CONFIG_88XXAU=m >> arch/arm/configs/bcm2711_defconfig ;
 fi
 }
 
@@ -217,7 +217,7 @@ ${MLKERNEL}-${VERSION}/drivers/net/wireless/Kconfig
 
 rtl8811cu_select(){
 if `grep -Fx "bcm2711" "../../soc.txt" >/dev/null;`
-	then echo CONFIG_RTL8821CU=m >> arch/arm64/configs/bcm2711_defconfig ;
+	then echo CONFIG_RTL8821CU=m >> arch/arm/configs/bcm2711_defconfig ;
 fi
 }
 
@@ -258,7 +258,7 @@ ${MLKERNEL}-${VERSION}/drivers/net/wireless/Kconfig
 
 rtl88x2bu_select(){
 if `grep -Fx "bcm2711" "../../soc.txt" >/dev/null;`
-	then echo CONFIG_RTL8822BU=m >> arch/arm64/configs/bcm2711_defconfig ;
+	then echo CONFIG_RTL8822BU=m >> arch/arm/configs/bcm2711_defconfig ;
 fi
 }
 

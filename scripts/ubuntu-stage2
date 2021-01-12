@@ -59,8 +59,6 @@ case `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null; echo $?` in
 esac
 mv -f growpart /usr/bin/
 mv -f credentials /usr/local/bin/
-wget -cq --show-progress https://raw.githubusercontent.com/pyavitz/scripts/master/fetch
-mv -f fetch /usr/local/bin/
 wget -cq --show-progress https://raw.githubusercontent.com/pyavitz/scripts/master/governor
 mv -f governor /usr/local/bin/
 if `grep -Fx "userscripts=1" "/root/userdata.txt" >/dev/null;`
@@ -229,6 +227,9 @@ if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
 	then : ;
 	else cypress_firmware
 fi
+
+### Certificates
+update-ca-certificates -f
 
 ### Htop
 if `grep -Fx 'DISTRO_VERSION="20.04.1"' "/root/userdata.txt" >/dev/null;`

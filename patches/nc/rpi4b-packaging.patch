@@ -21,7 +21,7 @@ diff -Naur a/scripts/package/builddeb b/scripts/package/builddeb
  else
  	cp System.map "$tmpdir/boot/System.map-$version"
  	cp $KCONFIG_CONFIG "$tmpdir/boot/config-$version"
-+	cp arch/arm64/boot/Image "$tmpdir/boot/kernel8.img"
++	cp arch/arm/boot/zImage "$tmpdir/boot/kernel7l.img"
  fi
  cp "$($MAKE -s -f $srctree/Makefile image_name)" "$tmpdir/$installed_image_path"
  
@@ -31,7 +31,7 @@ diff -Naur a/scripts/package/builddeb b/scripts/package/builddeb
  
 +# install dtb and overlays
 +mkdir -p "$tmpdir/boot/overlays"
-+cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/broadcom/bcm2711-rpi-4-b.dtb" "$tmpdir/boot/bcm2711-rpi-4-b.dtb"
++cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/bcm2711-rpi-4-b.dtb" "$tmpdir/boot/bcm2711-rpi-4-b.dtb"
 +cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/overlays/" "$tmpdir/boot/"
 +
  # Install the maintainer scripts

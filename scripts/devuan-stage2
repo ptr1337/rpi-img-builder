@@ -48,8 +48,6 @@ mv -f growpart /usr/bin/
 mv -f credentials.sh /usr/local/bin/credentials
 wget -cq --show-progress https://raw.githubusercontent.com/pyavitz/scripts/master/swh
 mv -f swh /usr/local/bin/
-wget -cq --show-progress https://raw.githubusercontent.com/pyavitz/scripts/master/fetch
-mv -f fetch /usr/local/bin/
 wget -cq --show-progress https://raw.githubusercontent.com/pyavitz/scripts/master/governor
 mv -f governor /usr/local/bin/
 case `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null; echo $?` in
@@ -249,9 +247,7 @@ if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
 fi
 
 ### Certificates
-if `grep -Fx "bcm2708" "/root/soc.txt" >/dev/null;`
-	then ca_certificates
-fi
+update-ca-certificates -f
 
 ### Htop
 if `grep -Fx 'DISTRO_VERSION="beowulf"' "/root/userdata.txt" >/dev/null;`

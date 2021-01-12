@@ -54,10 +54,10 @@ extract
 
 ### Setup
 if `grep -Fx "bcm2711" "../soc.txt" >/dev/null;`
-	then armv8_setup;
+	then armv7_setup;
 fi
 if `grep -Fx "bcm2710" "../soc.txt" >/dev/null;`
-	then armv8_setup;
+	then armv7_setup;
 fi
 if `grep -Fx "bcm2708" "../soc.txt" >/dev/null;`
 	then armv6_setup;
@@ -87,10 +87,10 @@ fi
 
 ### Menuconfig
 if `grep -Fx "bcm2711" "../../soc.txt" >/dev/null;`
-	then choose_v8_menuconfig;
+	then choose_v7_menuconfig;
 fi
 if `grep -Fx "bcm2710" "../../soc.txt" >/dev/null;`
-	then choose_v8_menuconfig;
+	then choose_v7_menuconfig;
 fi
 if `grep -Fx "bcm2708" "../../soc.txt" >/dev/null;`
 	then choose_v6_menuconfig;
@@ -98,10 +98,10 @@ fi
 
 ### Build deb
 if `grep -Fx "bcm2711" "../../soc.txt" >/dev/null;`
-	then choose_v8_compile;
+	then choose_v7_compile;
 fi
 if `grep -Fx "bcm2710" "../../soc.txt" >/dev/null;`
-	then choose_v8_compile;
+	then choose_v7_compile;
 fi
 if `grep -Fx "bcm2708" "../../soc.txt" >/dev/null;`
 	then choose_v6_compile;

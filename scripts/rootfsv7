@@ -1,5 +1,5 @@
 #!/bin/bash
-#AARCH64 ROOTFS
+#ARMHF ROOTFS
 RED="\e[0;31m"
 BRED="\e[1;31m"
 GRN="\e[0;32m"
@@ -12,20 +12,19 @@ source lib/source
 source lib/function/rootfs
 
 devuan_rootfs (){
-DEVUAN_RELEASE=devuan-${DISTRO_VERSION}-rootfs-aarch64.tar.xz
+DEVUAN_RELEASE=devuan-${DISTRO_VERSION}-rootfs-armhf.tar.xz
 if ls $DEVUAN_RELEASE > /dev/null 2>&1; then exit; 
 	else : ;
 fi
-wget -cq --show-progress https://github.com/pyavitz/rootfs-tarballs/releases/download/rootfs/devuan-${DISTRO_VERSION}-rootfs-aarch64.tar.xz
+wget -cq --show-progress https://github.com/pyavitz/rootfs-tarballs/releases/download/rootfs/devuan-${DISTRO_VERSION}-rootfs-armhf.tar.xz
 }
 
 ubuntu_rootfs (){
-UBUNTU_RELEASE=ubuntu-base-${DISTRO_VERSION}-base-aarch64.tar.gz
+UBUNTU_RELEASE=ubuntu-base-${DISTRO_VERSION}-base-armhf.tar.gz
 if ls $UBUNTU_RELEASE > /dev/null 2>&1; then exit; 
 	else : ;
 fi
-wget -cq --show-progress http://cdimage.ubuntu.com/ubuntu-base/releases/${DISTRO_VERSION}/release/ubuntu-base-${DISTRO_VERSION}-base-arm64.tar.gz
-mv -f ubuntu-base-${DISTRO_VERSION}-base-arm64.tar.gz ubuntu-base-${DISTRO_VERSION}-base-aarch64.tar.gz
+wget -cq --show-progress http://cdimage.ubuntu.com/ubuntu-base/releases/${DISTRO_VERSION}/release/ubuntu-base-${DISTRO_VERSION}-base-armhf.tar.gz
 }
 
 if `grep -Fx "devuan=1" "userdata.txt" > /dev/null 2>&1;`
@@ -41,7 +40,7 @@ fi
 RAM=0
 PROXY=""
 IMAGE_FOLDER="img/"
-IMAGE_VERSION="rootfs-aarch64"
+IMAGE_VERSION="rootfs-armhf"
 FILE=debian-${DISTRO_VERSION}-${IMAGE_VERSION}.tar.xz
 if ls $FILE > /dev/null 2>&1; then exit; 
 	else echo && echo -e "${GRN}Starting debootstrap${FIN} ...";
@@ -63,12 +62,12 @@ fi
 mkdir -p p1/etc/apt/apt.conf.d p1/etc/dpkg/dpkg.cfg.d
 echo "force-unsafe-io" > "p1/etc/dpkg/dpkg.cfg.d/dpkg-unsafe-io"
 mkdir -p p1/usr/bin
-cp $(which "qemu-aarch64-static") p1/usr/bin
+cp $(which "qemu-arm-static") p1/usr/bin
 if [ -n "$PROXY" ] ; then
-    http_proxy="$PROXY" debootstrap --arch arm64 --foreign ${DISTRO_VERSION} p1
+    http_proxy="$PROXY" debootstrap --arch armhf --foreign ${DISTRO_VERSION} p1
     http_proxy="$PROXY" chroot p1 /debootstrap/debootstrap --second-stage
 else
-    debootstrap --arch arm64 --foreign ${DISTRO_VERSION} p1
+    debootstrap --arch armhf --foreign ${DISTRO_VERSION} p1
     chroot p1 /debootstrap/debootstrap --second-stage
 fi
 if [ -n "$PROXY" ] ; then
@@ -77,7 +76,7 @@ Acquire::http::proxy "http://127.0.0.1:3142";
 EOF
 fi
 
-rm p1/usr/bin/qemu-aarch64-static
+rm p1/usr/bin/qemu-arm-static
 
 if [ -n "$PROXY" ] ; then
 	rm p1/etc/apt/apt.conf.d/30proxy

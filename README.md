@@ -1,4 +1,9 @@
-<img src="https://socialify.git.ci/pyavitz/rpi-img-builder/image?description=1&font=KoHo&forks=1&issues=1&logo=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fde%2Fthumb%2Fc%2Fcb%2FRaspberry_Pi_Logo.svg%2F475px-Raspberry_Pi_Logo.svg.png&owner=1&pattern=Charlie%20Brown&stargazers=1&theme=Dark" alt="rpi-img-builder" width="640" height="320" />
+# DO NOT USE
+
+---
+
+## Image Builder for the Raspberry Pi
+### Armhf/Armel Branch
 
 ## The boards and distributions that are currently supported
 * Raspberry Pi 4B (bcm2711) | Debian, Devuan and Ubuntu
@@ -12,17 +17,13 @@ In order to install the required dependencies, run the following command:
 ```
 sudo apt install build-essential bison bc git dialog patch dosfstools zip unzip qemu debootstrap \
                  qemu-user-static rsync kmod cpio flex libssl-dev libncurses5-dev parted fakeroot \
-                 swig aria2 pv toilet figlet crossbuild-essential-arm64 crossbuild-essential-armel \
+                 swig aria2 pv toilet figlet crossbuild-essential-armhf crossbuild-essential-armel \
                  distro-info-data lsb-release xz-utils curl
 ```
 
 This has been tested on an AMD64/x86_64 system running on [Debian Buster](https://www.debian.org/releases/buster/debian-installer/).
 
 Alternatively, you can run the command `make ccompile` in this directory.
-
-## Docker
-
-To build using [Docker](https://www.docker.com/), follow the instructions on the [Wiki](https://wiki.arm-image-builder.xyz/Docker) or use the other [builder](https://github.com/pyavitz/arm-img-builder).
 
 ---
 
@@ -122,7 +123,7 @@ userscripts=0	# 1 to enable | 0 to disable
 #### Raspberry Pi 4B
 
 ```sh
-# AARCH64
+# ARMv7
 make all	# kernel > rootfs > image (run at own risk)
 make kernel	# Foundation
 make mainline	# Mainline
@@ -132,7 +133,7 @@ make image
 #### Raspberry Pi 3A/B/+
 
 ```sh
-# AARCH64
+# ARMv7
 make rpi3-all	# kernel > rootfs > image (run at own risk)
 make rpi3-kernel
 make rpi3-image
@@ -141,7 +142,7 @@ make rpi3-image
 #### Raspberry Pi 0/0W/B/+
 
 ```sh
-# ARMv6l
+# ARMv6
 make rpi-all	# kernel > rootfs > image (run at own risk)
 make rpi-kernel
 make rpi-image
@@ -150,7 +151,7 @@ make rpi-image
 #### Root Filesystems
 
 ```sh
-make rootfs   # arm64
+make rootfs   # armhf
 make rootfsv6 # armel
 ```
 
@@ -232,22 +233,6 @@ Usage: deb-eeprom -opt
 
 Note:
 Upon install please run 'deb-eeprom -u' before using this script.
-```
-
-#### Using fetch
-```sh
-Fetch, Linux kernel installer for the Raspberry Pi Image Builder
-Usage: fetch -opt
-
-   -1       Linux 5.4.y LTS
-   -2       Linux Stable Branch
-   -3       Linux Mainline Branch
-   -4       Update Boot Binaries
-
-   -u       Update Fetch
-   -s       Not working? Setup Fetch
-
-fetch -h will list available options and kernel revisions
 ```
 #### Simple wifi helper (Debian / Devuan)
 ```sh

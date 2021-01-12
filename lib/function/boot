@@ -18,9 +18,6 @@ EOF
 
 bcm2711_config(){
 tee p1/config.txt <<EOF
-arm_64bit=1
-kernel=kernel8.img
-
 # For more options and information see
 # http://rpf.io/configtxt
 # Some settings may impact device functionality. See link above for details
@@ -115,9 +112,6 @@ EOF
 
 bcm2710_config(){
 tee p1/config.txt <<EOF
-arm_64bit=1
-kernel=kernel8.img
-
 # For more options and information see
 # http://rpf.io/configtxt
 # Some settings may impact device functionality. See link above for details
@@ -207,8 +201,6 @@ EOF
 
 bcm2708_config(){
 tee p1/config.txt <<EOF
-kernel=kernel.img
-
 # For more options and information see
 # http://rpf.io/configtxt
 # Some settings may impact device functionality. See link above for details

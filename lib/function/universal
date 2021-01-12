@@ -41,18 +41,9 @@ tmpfs	/tmp		tmpfs	defaults,nosuid 0 0
 EOF
 }
 
-qemu_arm64(){
-mkdir -p p2/usr/bin
-cp $(which "qemu-aarch64-static") p2/usr/bin
-}
-
 qemu_arm(){
 mkdir -p p2/usr/bin
 cp $(which "qemu-arm-static") p2/usr/bin
-}
-
-qemu_arm64_remove(){
-rm p2/usr/bin/qemu-aarch64-static
 }
 
 qemu_arm_remove(){
@@ -109,15 +100,7 @@ mv -f userland-remove-hi-pi.patch /root/userland/
 cd userland
 patch -p1 < userland-remove-hi-pi.patch
 rm -f userland-remove-hi-pi.patch
-if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
-	then ./buildme --aarch64 ;
-fi
-if `grep -Fx "bcm2710" "/root/soc.txt" >/dev/null;`
-	then ./buildme --aarch64 ;
-fi
-if `grep -Fx "bcm2708" "/root/soc.txt" >/dev/null;`
-	then ./buildme ;
-fi
+./buildme
 cd ~
 rm -f -d -R userland
 ldconfig
@@ -174,20 +157,6 @@ tar -xf cypress-firmware-v4.14.77-2020_0115.tar.gz
 cp -f firmware/* /lib/firmware/brcm/
 cd ~
 rm -fdr cypress
-echo Done.
-}
-
-ca_certificates(){
-echo
-echo Updating ca certificates.
-sleep 1s
-mkdir -p certificates
-cd certificates
-wget -cq --show-progress https://github.com/pyavitz/binary/releases/download/060420/ca-certificates_20200601.deb10u1_all.deb
-wget -cq --show-progress https://github.com/pyavitz/binary/releases/download/060420/ca-certificates-udeb_20200601.deb10u1_all.udeb
-dpkg -i *.deb *.udeb
-cd ~
-rm -fdr certificates
 echo Done.
 }
 
