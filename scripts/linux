@@ -2,7 +2,6 @@
 source lib/source
 source lib/function/kernel
 source lib/function/echoes
-source lib/function/wireless
 source userdata.txt
 UD=userdata.txt
 
