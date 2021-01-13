@@ -78,7 +78,7 @@ BRAND="Raspberry Pi"
 module_sig(){
 echo CONFIG_MODULE_SIG=y >> arch/arm/configs/bcm2711_defconfig
 echo CONFIG_MODULE_SIG_KEY='"'certs/signing_key.pem'"' >> arch/arm/configs/bcm2711_defconfig
-echo CONFIG_MODULE_SIG=y >> arch/arm/configs/bcmrpi3_defconfig
+echo CONFIG_MODULE_SIG=y >> arch/arm/configs/bcm2709_defconfig
 echo CONFIG_MODULE_SIG_KEY='"'certs/signing_key.pem'"' >> arch/arm/configs/bcmrpi3_defconfig
 echo CONFIG_MODULE_SIG=y >> arch/arm/configs/bcmrpi_defconfig
 echo CONFIG_MODULE_SIG_KEY='"'certs/signing_key.pem'"' >> arch/arm/configs/bcmrpi_defconfig

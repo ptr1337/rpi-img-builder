@@ -57,11 +57,6 @@ Release:	# Supported: buster, beowulf and 20.04.1
 Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
 Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
 Ubuntu:		# 1 to select (20.04.1/20.10)
-
-Wireless
-rtl88XXau:      # 1 to add Realtek 8812AU/14AU/21AU wireless support
-rtl88XXbu:      # 1 to add Realtek 88X2BU wireless support
-rtl88XXcu:      # 1 to add Realtek 8811CU/21CU wireless support
 ```
 
 #### Mainline Config Menu (RPi4B ONLY)
@@ -81,11 +76,6 @@ Release:	# Supported: buster, beowulf and 20.04.1
 Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
 Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
 Ubuntu:		# 1 to select (20.04.1/20.10)
-
-Wireless
-rtl88XXau:      # 1 to add Realtek 8812AU/14AU/21AU wireless support
-rtl88XXbu:      # 1 to add Realtek 88X2BU wireless support
-rtl88XXcu:      # 1 to add Realtek 8811CU/21CU wireless support
 ```
 ### Furthermore
 If interested in building a Raspberry Pi 4B image that uses mainline u-boot and linux
