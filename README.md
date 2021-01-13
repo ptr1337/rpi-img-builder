@@ -1,7 +1,3 @@
-# DO NOT USE
-
----
-
 ## Image Builder for the Raspberry Pi | Armhf Branch
 
 ## The boards and distributions that are currently supported
