@@ -203,7 +203,7 @@ rpi3_fconfig (){
     rtl8812au_module
     rtl88x2bu_module
     rtl8811cu_module
-    make ARCH=arm bcmrpi3_defconfig &> /dev/null
+    make ARCH=arm bcm2709_defconfig &> /dev/null
     echo_done
 }
 
