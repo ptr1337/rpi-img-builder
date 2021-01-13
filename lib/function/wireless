@@ -10,12 +10,8 @@ echo_done
 }
 
 rtl8812au_arm(){
-case `grep -Fx "bcm2708" "../soc.txt" >/dev/null; echo $?` in
-  0)
-    sed -i 's/CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/g' rtl8812au/Makefile
-    sed -i 's/CONFIG_PLATFORM_ARM_RPI = n/CONFIG_PLATFORM_ARM_RPI = y/g' rtl8812au/Makefile
-    ;;
-esac
+sed -i 's/CONFIG_PLATFORM_I386_PC = y/CONFIG_PLATFORM_I386_PC = n/g' rtl8812au/Makefile
+sed -i 's/CONFIG_PLATFORM_ARM_RPI = n/CONFIG_PLATFORM_ARM_RPI = y/g' rtl8812au/Makefile
 }
 
 rtl8812au(){
