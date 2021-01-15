@@ -27,15 +27,11 @@ unzip -qq /etc/opt/xfce-config.zip -d /etc/opt/
 rm -f /etc/opt/xfce-config.zip
 tar xf /etc/opt/xfce-config/config.tar.xz -C /etc/opt/xfce-config/
 mv -f /etc/opt/xfce-config/config/* /home/${user}/.config/
-mkdir -p /home/${user}/.themes
-tar xf /etc/opt/xfce-config/default-4.14.tar.xz -C /etc/opt/xfce-config/
-mv -f /etc/opt/xfce-config/default-4.14 /home/${user}/.themes/
 mkdir -p /home/${user}/.icons
 tar xf /etc/opt/xfce-config/Flat-Remix-Blue.tar.xz -C /etc/opt/xfce-config/
 mv -f /etc/opt/xfce-config/Flat-Remix-Blue /home/${user}/.icons/
 tar xf /etc/opt/xfce-config/Flat-Remix-Blue-Dark.tar.xz -C /etc/opt/xfce-config/
 mv -f /etc/opt/xfce-config/Flat-Remix-Blue-Dark /home/${user}/.icons/
-mv -f /etc/opt/xscreensaver /home/${user}/.xscreensaver
 mkdir -p /usr/share/backgrounds/xfce/
 mv -f /etc/opt/xfce-config/debian_dark_blue.png /usr/share/backgrounds/xfce/
 rm -fdr /etc/opt/xfce-config

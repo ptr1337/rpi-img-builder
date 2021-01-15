@@ -68,7 +68,7 @@ sed -i '1 a 127.0.1.1	bcm2711' /etc/hosts
 admin_xfce(){
 echo
 echo Xfce4 configs.
-mv -f xfce-config.zip xscreensaver /etc/opt/
+mv -f xfce-config.zip /etc/opt/
 echo Done.
 }
 
@@ -266,17 +266,6 @@ cd suru-plus
 ./install.sh
 cd ~
 rm -fdr suru-plus
-}
-
-plymouth_theme(){
-echo
-echo Installing progit
-unzip -qq brogit-plymouth-theme.zip
-rm -f brogit-plymouth-theme.zip
-cp -R ./brogit-plymouth-theme /usr/share/plymouth/themes/
-plymouth-set-default-theme brogit-plymouth-theme -R
-rm -fdr brogit-plymouth-theme
-echo Done.
 }
 
 install_xfce(){

@@ -111,9 +111,6 @@ apt -y autoclean
 apt update
 apt install -y ${XFCE2} ${FIRMWARE};
 
-### Plymouth theme
-plymouth_theme
-
 ### ZSWAP
 zramswap_config
 
@@ -287,7 +284,6 @@ echo Done.
 
 ### Install desktop
 install_xfce
-#install_vivaldi
 
 ### Modules
 if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
