@@ -33,8 +33,8 @@ diff -Naur a/scripts/package/builddeb b/scripts/package/builddeb
 +mkdir -p "$tmpdir/boot/overlays"
 +cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/bcm2710-rpi-3-b-plus.dtb" "$tmpdir/boot/bcm2710-rpi-3-b-plus.dtb"
 +cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/bcm2710-rpi-3-b.dtb" "$tmpdir/boot/bcm2710-rpi-3-b.dtb"
-+#cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/broadcom/bcm2710-rpi-cm3.dtb" "$tmpdir/boot/bcm2710-rpi-cm3.dtb"
-+#cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/broadcom/bcm2710-rpi-2-b.dtb" "$tmpdir/boot/bcm2710-rpi-2-b.dtb"
++cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/bcm2709-rpi-2-b.dtb" "$tmpdir/boot/bcm2709-rpi-2-b.dtb"
++cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/bcm2710-rpi-2-b.dtb" "$tmpdir/boot/bcm2710-rpi-2-b.dtb"
 +#cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/broadcom/bcm2837-rpi-3-a-plus.dtb" "$tmpdir/boot/bcm2837-rpi-3-a-plus.dtb"
 +cp -r "$tmpdir/usr/lib/raspberrypi-linux-image/overlays/" "$tmpdir/boot/"
 +
