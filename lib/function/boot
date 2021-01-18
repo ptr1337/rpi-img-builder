@@ -96,7 +96,8 @@ gpu_mem=256
 dtparam=audio=on
 enable_uart=1
 disable_splash=1
-dtoverlay=vc4-fkms-v3d
+#dtoverlay=vc4-fkms-v3d
+dtoverlay=vc4-kms-v3d
 max_framebuffers=1
 # overclock
 arm_freq=1750
@@ -232,7 +233,8 @@ disable_splash=1
 
 [pi4]
 # enable DRM VC4 V3D driver on top of the dispmanx display stack
-dtoverlay=vc4-fkms-v3d
+#dtoverlay=vc4-fkms-v3d
+dtoverlay=vc4-kms-v3d
 max_framebuffers=2
 EOF
 }
