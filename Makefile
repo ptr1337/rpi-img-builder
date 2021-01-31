@@ -69,7 +69,7 @@ commands:
 	@echo "Boards:"
 	@echo
 	@echo "  bcm2711                 Raspberry Pi 4B"
-	@echo "  bcm2710                 Raspberry Pi 3A/B/+"
+	@echo "  bcm2710                 Raspberry Pi 2/3/A/B/+"
 	@echo "  bcm2708                 Raspberry Pi 0/0W/B/+"
 	@echo
 	@echo "bcm2711:"
@@ -158,7 +158,7 @@ mainline:
 	@chmod +x ${XMAINLINE}
 	@${MAINLINE}
 
-# Raspberry Pi 3 | armv7
+# Raspberry Pi 2 / 3 | armv7
 rpi3-kernel:
 	# Linux | armv7
 	@ echo bcm2710 > soc.txt
@@ -172,7 +172,7 @@ rpi3-image:
 	@${CHOOSE}
 
 rpi3-all:
-	# RPi3B/+ | armv7
+	# RPi2/3 | armv7
 	# - - - - - - - -
 	#
 	# Building linux

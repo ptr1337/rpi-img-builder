@@ -121,7 +121,7 @@ make mainline	# Mainline
 make image
 ```
 
-#### Raspberry Pi 3A/B/+
+#### Raspberry Pi 2/3/A/B/+
 
 ```sh
 # ARMv7
