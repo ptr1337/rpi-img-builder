@@ -2,9 +2,10 @@
 ## Image Builder for the Raspberry Pi
 
 ## The boards and distributions that are currently supported
-* Raspberry Pi 4B (bcm2711) | Debian, Devuan and Ubuntu
-* Raspberry Pi 3/A/B/+ (bcm2710) | Debian, Devuan and Ubuntu
-* Raspberry Pi 0/W/B/+ (bcm2708) | Debian and Devuan
+* Raspberry Pi 4B | Debian, Devuan and Ubuntu
+* Raspberry Pi 2/3/A/B/+ | Debian, Devuan and Ubuntu
+* Raspberry Pi 0/W/B/+ | Debian and Devuan
+* [Raspberry Pi Hardware](https://www.raspberrypi.org/documentation/hardware/raspberrypi)
 
 ## Dependencies
 
