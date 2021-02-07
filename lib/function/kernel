@@ -177,7 +177,7 @@ rpi4_fconfig (){
 }
 
 rpi3_fconfig (){
-    echo -e "${RED}Making bcmrpi3 defconfig${FIN}."
+    echo -e "${RED}Making bcm2709 defconfig${FIN}."
     module_sig
     make ARCH=arm bcm2709_defconfig &> /dev/null
     echo_done
