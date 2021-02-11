@@ -1,6 +1,6 @@
 diff -Naur a/scripts/package/builddeb b/scripts/package/builddeb
 --- a/scripts/package/builddeb	2021-02-08 08:08:02.567604000 -0500
-+++ b/scripts/package/builddeb	2021-02-11 18:39:48.250038280 -0500
++++ b/scripts/package/builddeb	2021-02-11 18:43:18.554854679 -0500
 @@ -47,12 +47,13 @@
  }
  
@@ -74,7 +74,7 @@ diff -Naur a/scripts/package/builddeb b/scripts/package/builddeb
  # Build kernel header package
  (cd $srctree; find . -name Makefile\* -o -name Kconfig\* -o -name \*.pl) > "$objtree/debian/hdrsrcfiles"
  (cd $srctree; find arch/*/include include scripts -type f -o -type l) >> "$objtree/debian/hdrsrcfiles"
-@@ -183,6 +220,40 @@
+@@ -183,6 +220,41 @@
  (cd $objtree; cp $KCONFIG_CONFIG $destdir/.config) # copy .config manually to be where it's expected to be
  ln -sf "/usr/src/linux-headers-$version" "$kernel_headers_dir/lib/modules/$version/build"
  rm -f "$objtree/debian/hdrsrcfiles" "$objtree/debian/hdrobjfiles"
@@ -85,6 +85,7 @@ diff -Naur a/scripts/package/builddeb b/scripts/package/builddeb
 +	then echo "module.lds found.";
 +	else install -m 0644 $srctree/scripts/module.lds $destdir/scripts/ > /dev/null 2>&1;
 +fi
++
 +	# make scripts
 +	mkdir -p $kernel_headers_dir/DEBIAN
 +	cat > $kernel_headers_dir/DEBIAN/postinst <<EOT
