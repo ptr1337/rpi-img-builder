@@ -9,7 +9,8 @@ sleep 1s
 sudo rm -f /etc/motd
 sudo mv -f /etc/new.motd /etc/motd
 echo Done.
-sleep 1s
+echo
+sudo update-ca-certificates -f
 echo
 echo System is ready to go.
 sudo rm -f /usr/local/bin/run-setup
