@@ -762,8 +762,9 @@ chmod +x /etc/init.d/bthelper
 chmod +x /etc/init.d/zramswap
 chmod +x /etc/init.d/network
 chmod +x /etc/init.d/credentials
+update-rc.d -f hwclock.sh remove
 update-rc.d -f networking remove
-update-rc.d firstboot defaults 2
+update-rc.d firstboot defaults S
 update-rc.d governor defaults 2
 update-rc.d bthelper defaults 2
 update-rc.d zramswap defaults 2
