@@ -16,8 +16,8 @@ tar -xf ubuntu-base-${DISTRO_VERSION}-base-armhf.tar.gz -C p2/
 
 armhf_rootfs(){
 if ls ubuntu-base-${DISTRO_VERSION}-base-armhf.tar.gz > /dev/null 2>&1
-	then echo -n "Extracting rootfs " && armhf_extract && echo_bdone;
-	else echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
+	then echo && echo -n "Extracting rootfs " && armhf_extract && echo_bdone;
+	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
 fi
 echo
 }

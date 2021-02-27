@@ -7,7 +7,7 @@ source lib/source
 source userdata.txt > /dev/null 2>&1
 UD=userdata.txt
 
-userdata () {
+userdata(){
 echo ""
 echo "Please create a userdata.txt file"
 while [ true ] ; do
@@ -22,10 +22,11 @@ done
 
 if [ -f "$UD" ]; then
     echo ""
-    echo "$UD file found." > /dev/null 2>&1;
+    :;
 else 
     userdata
 fi
+
 if `grep -Fx "verbose=1" "userdata.txt" >/dev/null;`
 	then set -eux -o pipefail;
 	else set -eu -o pipefail;
@@ -67,7 +68,7 @@ fi
 
 ### cmd line
 echo && echo
-echo -e -n "${RED}Installing boot bits${FIN}."
+echo -e -n "${RED}Setting up boot directory${FIN}."
 cmdline > /dev/null 2>&1
 if ls p1/cmdline.txt > /dev/null 2>&1
 	then echo && echo -n "cmdline.txt " && sleep 1s && echo_nok;
@@ -84,22 +85,9 @@ if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
 	then bcm2708_config > /dev/null 2>&1;
 fi
 if ls p1/config.txt > /dev/null 2>&1
-	then echo && echo -n "config.txt " && sleep 1s && echo_nok;
-	else echo && echo -n "config.txt " && sleep 1s && echo_fail && exit;
+	then echo && echo -n "config.txt  " && sleep 1s && echo_nok;
+	else echo && echo -n "config.txt  " && sleep 1s && echo_fail && exit;
 fi
-### Fetching boot bits
-if `grep -Fx "bcm2711" "soc.txt" >/dev/null;`
-	then rpi4_bootbins;
-fi
-if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
-	then rpi_bootbins;
-fi
-if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
-	then rpi_bootbins;
-fi
-
-### clean boot bits
-rm -f firmware/boot/*
 
 ### extract rootfs
 if `grep -Fx "bcm2711" "soc.txt" >/dev/null;`
@@ -156,7 +144,7 @@ cp files/devuan/scripts/* p2/root
 cp files/misc/* p2/root
 cp files/scripts/* p2/root
 cp files/users/* p2/root
-cp firmware/fw-0a5c_21e8.hcd p2/root
+cp firmware/{fw-0a5c_21e8.hcd,UPDATE.mem} p2/root
 if `grep -Fx "userscripts=1" "userdata.txt" >/dev/null;`
 	then uscripts_stage1;
 fi

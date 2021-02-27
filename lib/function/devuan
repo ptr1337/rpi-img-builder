@@ -55,16 +55,16 @@ tar -xf devuan-${DISTRO_VERSION}-rootfs-armel.tar.xz -C p2/
 
 armhf_rootfs(){
 if ls devuan-${DISTRO_VERSION}-rootfs-armhf.tar.xz > /dev/null 2>&1
-	then echo -n "Extracting rootfs " && armhf_extract && echo_bdone;
-	else echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
+	then echo && echo -n "Extracting rootfs " && armhf_extract && echo_bdone;
+	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
 fi
 echo
 }
 
 armel_rootfs(){
 if ls devuan-${DISTRO_VERSION}-rootfs-armel.tar.xz > /dev/null 2>&1
-	then echo -n "Extracting rootfs " && armel_extract && echo_bdone;
-	else echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
+	then echo && echo -n "Extracting rootfs " && armel_extract && echo_bdone;
+	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
 fi
 echo
 }

@@ -1,9 +1,10 @@
 #!/bin/bash
 source userdata.txt > /dev/null 2>&1;
 source lib/function/echoes
+source lib/source
 UD=userdata.txt
 
-userdata () {
+userdata(){
 echo ""
 echo -e "You have ${RED}not${FIN} created a ${RED}userdata.txt${FIN} file."
 while [ true ] ; do

@@ -5,7 +5,7 @@ source lib/function/echoes
 source userdata.txt
 UD=userdata.txt
 
-userdata () {
+userdata(){
 echo ""
 echo -e "You have ${RED}not${FIN} created a ${RED}userdata.txt${FIN} file."
 while [ true ] ; do
@@ -20,7 +20,7 @@ done
 
 if [ -f "$UD" ]; then
     echo ""
-    echo -e "${YLW}$UD file found${FIN}."
+    :;
 else 
     userdata
 fi
@@ -42,6 +42,7 @@ case `grep -Fx "devuser=1" "userdata.txt" >/dev/null; echo $?` in
 esac
 
 # prep
+validation
 source_dir
 clean_source
 
@@ -53,13 +54,13 @@ extract
 
 ### Setup
 if `grep -Fx "bcm2711" "../soc.txt" >/dev/null;`
-	then armv7_setup;
+	then armv7_setup && rpi4_binaries;
 fi
 if `grep -Fx "bcm2710" "../soc.txt" >/dev/null;`
-	then armv7_setup;
+	then armv7_setup && rpi_binaries;
 fi
 if `grep -Fx "bcm2708" "../soc.txt" >/dev/null;`
-	then armv6_setup;
+	then armv6_setup && rpi_binaries;
 fi
 
 
