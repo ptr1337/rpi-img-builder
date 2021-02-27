@@ -25,9 +25,9 @@ fi
 # do not edit above this line
 
 # debian
-DEBIANIMGSIZE="1650MB"
-DEBIANIMGSIZE_TESTING="1850MB"
-DEBIANIMGSIZE_UNSTABLE="1850MB"
+DEBIANIMGSIZE="1675MB"
+DEBIANIMGSIZE_TESTING="1875MB"
+DEBIANIMGSIZE_UNSTABLE="1875MB"
 
 DEBIAN1="tzdata keyboard-configuration sudo man-db dbus initramfs-tools \
 	e2fsprogs fonty-rg patch curl wget apt-transport-https dirmngr \
@@ -41,9 +41,9 @@ DEBIAN2="cpu hwinfo haveged resolvconf git build-essential net-tools ifplugd \
 	avahi-utils distro-info-data lsb-release"
 
 # devuan
-DEVUANIMGSIZE="1775MB"
-DEVUANIMGSIZE_TESTING="1975MB"
-DEVUANIMGSIZE_UNSTABLE="1975MB"
+DEVUANIMGSIZE="1800MB"
+DEVUANIMGSIZE_TESTING="2000MB"
+DEVUANIMGSIZE_UNSTABLE="2000MB"
 
 DEVUAN1="tzdata keyboard-configuration sudo man-db dbus initramfs-tools \
 	e2fsprogs fonty-rg patch curl wget apt-transport-https dirmngr \
@@ -57,8 +57,8 @@ DEVUAN2="cpu hwinfo haveged openresolv git build-essential net-tools ifplugd \
 	ntp ifupdown-extra avahi-utils distro-info-data lsb-release"
 
 # ubuntu
-UBUNTUIMGSIZE="1625MB"
-UBUNTUIMGSIZE_UNSTABLE="1625MB"
+UBUNTUIMGSIZE="1650MB"
+UBUNTUIMGSIZE_UNSTABLE="1650MB"
 
 # stage2
 UBUNTU1="tzdata keyboard-configuration sudo man-db dbus initramfs-tools \
