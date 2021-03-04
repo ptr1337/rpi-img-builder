@@ -61,6 +61,11 @@ umount p2
 mount -o defaults,noatime "${IMAGE_LOOP_DEV_ROOTFS}" p2
 }
 
+image_size(){
+truncate -s ${EXT4} "${IMAGE_FOLDER}${IMAGE_FILE_NAME}";
+partitions
+}
+
 create_fstab(){
 tee p2/etc/fstab <<EOF
 UUID=${BOOT_UUID}	/boot		vfat    defaults 0 2
