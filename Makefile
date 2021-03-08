@@ -6,30 +6,18 @@ ADMIN=./lib/dialog/admin_config
 DIALOGRC=$(shell cp -f lib/dialogrc ~/.dialogrc)
 
 # rootfs
-RFSV8=./scripts/rootfsv8
-ROOTFSV8=sudo ./scripts/rootfsv8
-RFSV6=./scripts/rootfsv6
-ROOTFSV6=sudo ./scripts/rootfsv6
+RFSV8=./scripts/rootfs
+ROOTFSV8=sudo ./scripts/rootfs
 
 # kernel
 SELECT=./scripts/select
 XLINUX=./scripts/linux
 LINUX=sudo ./scripts/linux
-XMAINLINE=./scripts/mainline
-MAINLINE=sudo ./scripts/mainline
 
 # stages
 DEB=./scripts/debian-stage1
 DEBIAN=sudo ./scripts/debian-stage1
 DEBSTG2=./scripts/debian-stage2
-
-DEV=./scripts/devuan-stage1
-DEVUAN=sudo ./scripts/devuan-stage1
-DEVSTG2=./scripts/devuan-stage2
-
-UBU=./scripts/ubuntu-stage1
-UBUNTU=sudo ./scripts/ubuntu-stage1
-UBUSTG2=./scripts/ubuntu-stage2
 
 # choose distribution
 CHOOSE=./scripts/choose
@@ -86,21 +74,9 @@ commands:
 	@echo "  make rpi3-image         Make bootable image"
 	@echo "  make rpi3-all           Kernel > rootfs > image"
 	@echo
-	@echo "bcm2708:"
-	@echo " "
-	@echo "  make rpi-kernel         Builds linux kernel"
-	@echo "  make rpi-image          Make bootable image"
-	@echo "  make rpi-all            Kernel > rootfs > image"
-	@echo
-	@echo "Mainline:"
-	@echo
-	@echo "  make mlconfig		  Create user data file"
-	@echo "  make mainline		  Builds mainline linux kernel"
-	@echo
 	@echo "Root filesystem:"
 	@echo
 	@echo "  make rootfs		  arm64"
-	@echo "  make rootfsv6		  armel"
 	@echo
 	@echo "Miscellaneous:"
 	@echo
@@ -115,8 +91,8 @@ ccompile:
 	sudo apt install build-essential bison bc git dialog patch \
 	dosfstools zip unzip qemu debootstrap qemu-user-static rsync \
 	kmod cpio flex libssl-dev libncurses5-dev parted fakeroot swig \
-	aria2 pv toilet figlet crossbuild-essential-arm64 crossbuild-essential-armel \
-	distro-info-data lsb-release xz-utils curl e2fsprogs btrfs-progs kpartx
+	aria2 pv toilet figlet crossbuild-essential-arm64 distro-info-data \
+	lsb-release xz-utils curl e2fsprogs btrfs-progs kpartx
 
 ncompile:
 	# Install native dependencies:
@@ -155,12 +131,6 @@ all:
 	@chmod +x ${CHOOSE}
 	@${CHOOSE}
 
-mainline:
-	# Mainline Linux | aarch64
-	@ echo bcm2711 > soc.txt
-	@chmod +x ${XMAINLINE}
-	@${MAINLINE}
-
 # Raspberry Pi 2 / 3 | aarch64
 rpi3-kernel:
 	# Linux | aarch64
@@ -190,45 +160,11 @@ rpi3-all:
 	@chmod +x ${CHOOSE}
 	@${CHOOSE}
 
-# Raspberry Pi | armv6l
-rpi-kernel:
-	# Linux | armv6l
-	@ echo bcm2708 > soc.txt
-	@chmod +x ${XLINUX}
-	@${LINUX}
-
-rpi-image:
-	# Make bootable image
-	@ echo bcm2708 > soc.txt
-	@chmod +x ${CHOOSE}
-	@${CHOOSE}
-
-rpi-all:
-	# RPi | armv6l
-	# - - - - - - - -
-	#
-	# Building linux
-	@ echo bcm2708 > soc.txt
-	@chmod +x ${XLINUX}
-	@${LINUX}
-	# Creating ROOTFS tarball
-	@chmod +x ${RFSV6}
-	@${ROOTFSV6}
-	# Making bootable img
-	@ echo bcm2708 > soc.txt
-	@chmod +x ${CHOOSE}
-	@${CHOOSE}
-
 # rootfs
 rootfs:
 	# ROOTFS
 	@chmod +x ${RFSV8}
 	@${ROOTFSV8}
-
-rootfsv6:
-	# ROOTFS
-	@chmod +x ${RFSV6}
-	@${ROOTFSV6}
 
 # clean and purge
 cleanup:
@@ -249,56 +185,17 @@ menu:
 	# User menu interface
 	@chmod +x ${MENU}
 	@${MENU}
+
 config:
 	# User config menu
 	@chmod go=rx files/scripts/*
 	@chmod go=rx files/debian/scripts/*
-	@chmod go=rx files/devuan/scripts/*
-	@chmod go=rx files/ubuntu/scripts/*
 	@chmod go=r files/misc/*
-	@chmod go=r files/debian/misc/*
-	@chmod go=r files/devuan/misc/*
-	@chmod go=r files/ubuntu/misc/*
 	@chmod go=r files/debian/rules/*
-	@chmod go=r files/devuan/rules/*
-	@chmod go=r files/ubuntu/rules/*
 	@chmod go=r files/users/*
+	@chmod go=r files/autopair/*
 	@chmod +x ${CONF}
 	@${CONF}
-
-mlconfig:
-	# User config menu
-	@chmod go=rx files/scripts/*
-	@chmod go=rx files/debian/scripts/*
-	@chmod go=rx files/devuan/scripts/*
-	@chmod go=rx files/ubuntu/scripts/*
-	@chmod go=r files/misc/*
-	@chmod go=r files/debian/misc/*
-	@chmod go=r files/devuan/misc/*
-	@chmod go=r files/ubuntu/misc/*
-	@chmod go=r files/debian/rules/*
-	@chmod go=r files/devuan/rules/*
-	@chmod go=r files/ubuntu/rules/*
-	@chmod go=r files/users/*
-	@chmod +x ${MLCONF}
-	@${MLCONF}
-
-admin:
-	# User config menu
-	@chmod go=rx files/scripts/*
-	@chmod go=rx files/debian/scripts/*
-	@chmod go=rx files/devuan/scripts/*
-	@chmod go=rx files/ubuntu/scripts/*
-	@chmod go=r files/misc/*
-	@chmod go=r files/debian/misc/*
-	@chmod go=r files/devuan/misc/*
-	@chmod go=r files/ubuntu/misc/*
-	@chmod go=r files/debian/rules/*
-	@chmod go=r files/devuan/rules/*
-	@chmod go=r files/ubuntu/rules/*
-	@chmod go=r files/users/*
-	@chmod +x ${ADMIN}
-	@${ADMIN}
 
 # miscellaneous
 dialogrc:
@@ -323,28 +220,11 @@ debianos:
 	@chmod +x ${DEBSTG2}
 	@${DEBIAN}
 
-devuanos:
-	# Devuan
-	@chmod +x ${DEV}
-	@chmod +x ${DEVSTG2}
-	@${DEVUAN}
-
-ubuntuos:
-	# Ubuntu
-	@chmod +x ${UBU}
-	@chmod +x ${UBUSTG2}
-	@${UBUNTU}
-
 # kernel helper
 helper:
 	# Helper script
 	@chmod +x ${XHELPER}
 	@${HELPER} -h
-
-2708:
-	# BCM2708
-	@chmod +x ${XHELPER}
-	@${HELPER} -1
 
 2710:
 	# BCM2710

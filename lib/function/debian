@@ -36,21 +36,9 @@ aarch64_extract(){
 tar -xf debian-${DISTRO_VERSION}-rootfs-aarch64.tar.xz -C p2/
 }
 
-armel_extract(){
-tar -xf debian-${DISTRO_VERSION}-rootfs-armel.tar.xz -C p2/
-}
-
 aarch64_rootfs(){
 if ls debian-${DISTRO_VERSION}-rootfs-aarch64.tar.xz > /dev/null 2>&1
 	then echo && echo -n "Extracting rootfs " && aarch64_extract && echo_bdone;
-	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
-fi
-echo
-}
-
-armel_rootfs(){
-if ls debian-${DISTRO_VERSION}-rootfs-armel.tar.xz > /dev/null 2>&1
-	then echo && echo -n "Extracting rootfs " && armel_extract && echo_bdone;
 	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
 fi
 echo
@@ -65,104 +53,17 @@ mv -f firmware-nonfree-master.tar.gz firmware/
 
 rename_image(){
 source kernel.txt
-mv -f ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
+mv -f ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-musicbox-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
 }
 
 compress_image(){
 source kernel.txt
-mv -f ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
-xz -zev --threads=${CORES} ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
+mv -f ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-musicbox-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
+xz -zev --threads=${CORES} ${DEVICE_SOC}-musicbox-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
 }
 
 # STAGE 2
-# USER CONFIG
-bcm2708_user(){
-echo -n 'bcm2708' > /etc/hostname
-sed -i '1 a 127.0.1.1	bcm2708' /etc/hosts
-adduser ${user} --gecos ${user^} --disabled-password
-}
-
-bcm2710_user(){
-echo -n 'bcm2710' > /etc/hostname
-sed -i '1 a 127.0.1.1	bcm2710' /etc/hosts
-adduser ${user} --gecos ${user^} --disabled-password
-}
-
-bcm2711_user(){
-echo -n 'bcm2711' > /etc/hostname
-sed -i '1 a 127.0.1.1	bcm2711' /etc/hosts
-adduser ${user} --gecos ${user^} --disabled-password
-}
-
-user_config(){
-if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
-	then bcm2711_user
-fi
-if `grep -Fx "bcm2710" "/root/soc.txt" >/dev/null;`
-	then bcm2710_user
-fi
-if `grep -Fx "bcm2708" "/root/soc.txt" >/dev/null;`
-	then bcm2708_user
-fi
-
-echo "${user}:${passwd}" | chpasswd
-adduser ${user} sudo
-adduser ${user} audio
-adduser ${user} dialout
-adduser ${user} video
-adduser ${user} disk
-groupadd spi
-groupadd i2c
-groupadd gpio
-adduser ${user} spi
-adduser ${user} i2c
-adduser ${user} gpio
-adduser ${user} plugdev
-adduser ${user} netdev
-adduser ${user} bluetooth
-adduser ${user} input
-adduser ${user} tty
-
-echo
-echo Adding mc skins.
-sleep 1s
-mkdir -p /usr/share/mc/skins
-mv -f darkgreen.ini /usr/share/mc/skins/darkgreen.ini
-mv -f darkred.ini /usr/share/mc/skins/darkred.ini
-echo Done.
-echo
-echo Adding mc ini and nanorc
-sleep 1s
-mkdir -p /root/.config/mc
-mv -f root-ini /root/.config/mc/ini
-mv -f nanorc-root /root/.nanorc
-mkdir -p /home/${user}/.config/mc
-mv -f user-ini /home/${user}/.config/mc/ini
-mv -f nanorc-user /home/${user}/.nanorc
-chown -R root:root /root
-chown -R ${user}:${user} /home/${user}
-echo Done.
-
-echo
-echo Creating sudoers file.
-sleep 1s
-rm -f /etc/sudoers.d/010_pi-nopasswd
-tee /etc/sudoers.d/010_${user}-nopasswd <<EOF
-${user} ALL=(ALL) NOPASSWD: ALL
-EOF
-echo Done.
-
-rm -f username.txt
-rm -f whogoesthere
-chown -R ${user}:${user} /home/${user}
-}
-
 # ADMIN CONFIG
-bcm2708_admin(){
-echo -n 'bcm2708' > /etc/hostname
-sed -i '1 a 127.0.1.1	bcm2708' /etc/hosts
-}
-
 bcm2710_admin(){
 echo -n 'bcm2710' > /etc/hostname
 sed -i '1 a 127.0.1.1	bcm2710' /etc/hosts
@@ -179,9 +80,6 @@ if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
 fi
 if `grep -Fx "bcm2710" "/root/soc.txt" >/dev/null;`
 	then bcm2710_admin
-fi
-if `grep -Fx "bcm2708" "/root/soc.txt" >/dev/null;`
-	then bcm2708_admin
 fi
 
 groupadd spi
@@ -206,6 +104,7 @@ mv -f nanorc-user /etc/opt/nanorc-user
 chown -R root:root /root
 echo Done.
 
+mv -f user-bin.zip /etc/opt/
 mv -f username.txt /boot/
 mv -f whogoesthere /usr/local/bin/
 chmod +x /usr/local/bin/whogoesthere
@@ -258,17 +157,6 @@ fi
 EOF
 }
 
-user_eeprom(){
-echo
-echo Adding user eeprom config.
-tee /home/${user}/.eeprom <<EOF
-# EEPROM CONFIG
-## https://archive.raspberrypi.org/debian/pool/main/r/rpi-eeprom/
-EEPROM_VERSION="${EEPROM_VERSION}"
-EOF
-chown ${user}:${user} /home/${user}/.eeprom
-}
-
 admin_eeprom(){
 echo
 echo Adding user eeprom config.
@@ -278,21 +166,6 @@ tee /etc/opt/eeprom <<EOF
 EEPROM_VERSION="${EEPROM_VERSION}"
 EOF
 chown root:root /etc/opt/eeprom
-}
-
-eeprom_choose(){
-case `grep -Fx "admin=1" "/root/userdata.txt" >/dev/null; echo $?` in
-  0)
-	admin_eeprom
-    ;;
-  1)
-	user_eeprom
-    ;;
-esac
-}
-
-bcm_sdio_zero-w(){
-wget -cq --show-progress https://raw.githubusercontent.com/openwrt/cypress-nvram/master/brcmfmac43430-sdio.raspberrypi%2Cmodel-zero-w.txt
 }
 
 bcm_sdio_3-b-plus(){
@@ -499,5 +372,5 @@ update-rc.d firstboot defaults 2
 systemctl enable firstboot
 systemctl enable credentials
 systemctl enable governor
-systemctl enable serial-getty@ttyUSB0.service
+#systemctl enable serial-getty@ttyUSB0.service
 }

@@ -4,17 +4,8 @@ mkdir -p p2/usr/bin
 cp $(which "qemu-aarch64-static") p2/usr/bin
 }
 
-qemu_arm(){
-mkdir -p p2/usr/bin
-cp $(which "qemu-arm-static") p2/usr/bin
-}
-
 qemu_arm64_remove(){
 rm p2/usr/bin/qemu-aarch64-static
-}
-
-qemu_arm_remove(){
-rm p2/usr/bin/qemu-arm-static
 }
 
 # Stage 2
@@ -83,15 +74,7 @@ mv -f userland-remove-hi-pi.patch /root/userland/
 cd userland
 patch -p1 < userland-remove-hi-pi.patch
 rm -f userland-remove-hi-pi.patch
-if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
-	then ./buildme --aarch64 ;
-fi
-if `grep -Fx "bcm2710" "/root/soc.txt" >/dev/null;`
-	then ./buildme --aarch64 ;
-fi
-if `grep -Fx "bcm2708" "/root/soc.txt" >/dev/null;`
-	then ./buildme ;
-fi
+./buildme --aarch64
 cd ~
 rm -f -d -R userland
 ldconfig
@@ -264,16 +247,12 @@ echo_done
 }
 
 shrink(){
+echo
 chmod +x scripts/shrink
 if `grep -Fx "debian=1" "userdata.txt" >/dev/null;`
 	then scripts/shrink -s ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img;
 fi
-if `grep -Fx "devuan=1" "userdata.txt" >/dev/null;`
-	then scripts/shrink -s ${DEVICE_SOC}-devuan-${DISTRO_VERSION}-${IMAGE_DATE}.img;
-fi
-if `grep -Fx "ubuntu=1" "userdata.txt" >/dev/null;`
-	then scripts/shrink -s ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${IMAGE_DATE}.img;
-fi
+echo
 fix_cmdline
 }
 
@@ -282,12 +261,6 @@ echo 'LOOP1="/dev/mapper/' > kpart1
 echo 'LOOP2="/dev/mapper/' >> kpart1
 if `grep -Fx "debian=1" "userdata.txt" >/dev/null;`
 	then IMAGE_FILE="${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img";
-fi
-if `grep -Fx "devuan=1" "userdata.txt" >/dev/null;`
-	then IMAGE_FILE="${DEVICE_SOC}-devuan-${DISTRO_VERSION}-${IMAGE_DATE}.img";
-fi
-if `grep -Fx "ubuntu=1" "userdata.txt" >/dev/null;`
-	then IMAGE_FILE="${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${IMAGE_DATE}.img";
 fi
 kpartx="$(kpartx -av $IMAGE_FILE)"
 echo "$kpartx"
@@ -378,4 +351,67 @@ RemainAfterExit=yes
 [Install]
 WantedBy=multi-user.target
 EOF
+}
+
+# PIANOBAR AND BLUETOOTH
+piano_bar(){
+git clone https://github.com/PromyLOPh/pianobar.git
+cd pianobar
+make -j4
+make install
+cd ~
+rm -fdr pianobar
+}
+
+libao_conf(){
+rm -f /etc/libao.conf
+tee /etc/libao.conf <<EOF
+default_driver=alsa
+buffer_time=1300
+quiet
+EOF
+chown root:root /etc/libao.conf
+}
+
+stereo_audio(){
+rm -f /usr/share/pulseaudio/alsa-mixer/profile-sets/default.conf
+mv -f default.conf /usr/share/pulseaudio/alsa-mixer/profile-sets/
+chown root:root /usr/share/pulseaudio/alsa-mixer/profile-sets/default.conf
+}
+
+sed_configs(){
+sed -i '/#Name = BlueZ/a Enable=Source,Sink,Media' /etc/bluetooth/main.conf
+sed -i 's/#Class = 0x000100/Class = 0x00041C/g' /etc/bluetooth/main.conf
+sed -i 's/#DiscoverableTimeout = 0/DiscoverableTimeout = 0/g' /etc/bluetooth/main.conf
+sed -i 's/#PairableTimeout = 0/PairableTimeout = 0/g' /etc/bluetooth/main.conf
+sed -i 's/; resample-method = speex-float-1/resample-method = trivial/g' /etc/pulse/daemon.conf
+}
+
+pulseaudio_init(){
+mv -f pulseaudio.init /etc/init.d/pulseaudio
+chmod 755 /etc/init.d/pulseaudio
+update-rc.d pulseaudio defaults
+}
+
+autopair_service(){
+mv -f auto-agent autopair bluezutils.py bluezutils.pyc BtAutoPair.py BtAutoPair.pyc testAutoPair.py /usr/local/bin/
+chmod +x /usr/local/bin/auto-agent
+chmod +x /usr/local/bin/autopair
+chown -R root:root /usr/local/bin/
+tee /etc/systemd/system/autopair.service <<EOF
+[Unit]
+Description=Auto Pair
+Requires=bluetooth.service
+After=bluetooth.service
+Before=rc-local.service
+ConditionPathExists=/usr/local/bin/autopair
+
+[Service]
+ExecStart=/usr/local/bin/autopair > /dev/null 2>&1
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl enable autopair
 }

@@ -2,13 +2,9 @@ DEF="../defconfig"
 PAT="../patches"
 CC="../patches/cc"
 NC="../patches/nc"
-ML="../patches/ml"
-MLCC="../patches/ml/cc"
-MLNC="../patches/ml/nc"
 UP="../patches/userpatches"
 OUT4="../output/bcm2711"
 OUT3="../output/bcm2710"
-OUT="../output/bcm2708"
 SRC="source"
 
 CORES=`nproc`
@@ -24,8 +20,8 @@ fi
 }
 # do not edit above this line
 
-EXT4="2200MB"
-BTRFS="1600MB"
+EXT4="2300MB"
+BTRFS="2000MB"
 
 # debian
 DEBIAN1="tzdata keyboard-configuration sudo man-db dbus initramfs-tools \
@@ -37,31 +33,10 @@ DEBIAN2="cpu hwinfo haveged resolvconf git build-essential net-tools ifplugd \
 	bison flex mc nano figlet toilet dialog python3 python3-setuptools \
 	openssh-client openssh-server ntfs-3g bc zram-tools libncursesw5-dev \
 	libssl-dev autopoint autoconf automake pkg-config libtool fake-hwclock \
-	avahi-utils distro-info-data lsb-release liblzo2-2"
-
-# devuan
-DEVUAN1="tzdata keyboard-configuration sudo man-db dbus initramfs-tools \
-	fonty-rg patch curl wget apt-transport-https dirmngr cmake rsync \
-	psmisc parted pv zip unzip aria2 libell0"
-
-DEVUAN2="cpu hwinfo haveged openresolv git build-essential net-tools ifplugd \
-	fuse wpasupplicant wireless-tools usbutils alsa-utils gettext \
-	bison flex mc nano figlet toilet dialog python3 python3-setuptools \
-	openssh-client openssh-server ntfs-3g bc zram-tools libncursesw5-dev \
-	libssl-dev autopoint autoconf automake pkg-config libtool fake-hwclock \
-	ntp ifupdown-extra avahi-utils distro-info-data lsb-release liblzo2-2"
-
-# ubuntu
-UBUNTU1="tzdata keyboard-configuration sudo man-db dbus initramfs-tools \
-	fonty-rg patch curl wget apt-transport-https dirmngr cmake rsync \
-	psmisc parted pv zip unzip aria2"
-
-UBUNTU2="cpu hwinfo haveged openresolv git build-essential net-tools ifplugd \
-	fuse wpasupplicant wireless-tools usbutils alsa-utils gettext \
-	bison flex mc nano figlet toilet dialog python3 python3-setuptools \
-	openssh-client openssh-server ntfs-3g bc zram-tools libncursesw5-dev \
-	libssl-dev autopoint autoconf automake pkg-config libtool fake-hwclock \
-	network-manager avahi-utils distro-info-data lsb-release liblzo2-2"
+	avahi-utils distro-info-data lsb-release liblzo2-2 python-pyaudio libao-dev \
+	python-dbus libcurl4-openssl-dev libgcrypt20-dev libgcrypt20 libjson-c-dev \
+	libavfilter-dev npm libao4 libao-common screen pulseaudio python-pexpect \
+	pulseaudio-module-bluetooth"
 
 # firmware
 FIRMWARE="firmware-linux-nonfree firmware-linux firmware-misc-nonfree \

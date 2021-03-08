@@ -1,9 +1,73 @@
-<img src="https://socialify.git.ci/pyavitz/rpi-img-builder/image?description=1&font=KoHo&forks=1&issues=1&logo=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fde%2Fthumb%2Fc%2Fcb%2FRaspberry_Pi_Logo.svg%2F475px-Raspberry_Pi_Logo.svg.png&owner=1&pattern=Charlie%20Brown&stargazers=1&theme=Dark" alt="rpi-img-builder" width="640" height="320" />
+## Musicbox
+
+***Turn the Pi into a headless Pandora Music Player / Bluetooth Audio Receiver***
+
+`Target Device: Raspberry Pi 3A+`
+
+***Applications:***
+* Pianobar ... [Console client](https://github.com/PromyLOPh/pianobar)
+* Patiobar ... [Web interface](https://github.com/pyavitz/Patiobar)
+* Bluez
+
+***Recommend:***
+* SSH Button ... [Android App](https://play.google.com/store/apps/details?id=com.pd7l.sshbutton&hl=en_US)
+* Amp Modules ... [PAM8403](https://www.amazon.com/PAM8403-Channel-Digital-Amplifier-Potentionmeter/dp/B01MYTZGYM) [PAM8406](https://www.ebay.com/itm/Amplifier-Board-Class-D-Audio-5W-5W-Module-Dual-Channel-PAM8406-DIY-Stereo-Mini/313153265326?_trkparms=aid%3D777001%26algo%3DDISCO.FEED%26ao%3D1%26asc%3D225074%26meid%3D56ccad57a0b3470196bc7664442aad56%26pid%3D100651%26rk%3D1%26rkt%3D1%26mehot%3Dnone%26itm%3D313153265326%26pmt%3D1%26noa%3D1%26pg%3D2380057%26algv%3DPersonalizedTopicsRefactor%26brand%3D&_trksid=p2380057.c100651.m4497&_trkparms=pageci%3A7e3b7455-d363-11ea-ac52-ae0bcbae8747%7Cparentrq%3Aa65578871730a45e5bf83bf0ffd9ca44%7Ciid%3A1)
+
+### Headless Usage:
+```sh
+Create keygen: ssh-keygen
+Copy to target device: ssh-copy-id user@ipaddress
+```
+```sh
+nano ~/.ssh/config
+Host musicbox
+        User username
+        HostName ipaddress
+        Port 22
+        ForwardX11 no
+```
+```sh
+nano ~/.config/musicbox_func.txt
+start (){
+ssh musicbox '~/bin/start'
+}
+stop (){
+ssh musicbox '~/bin/stop'
+}
+play (){    # play/pause
+ssh musicbox '~/bin/play'
+}
+song (){
+ssh musicbox '~/bin/song'
+}
+next (){
+ssh musicbox '~/bin/next'
+}
+volup (){
+ssh musicbox '~/bin/volup'
+}
+voldn (){
+ssh musicbox '~/bin/voldn'
+}
+mute (){
+ssh musicbox '~/bin/mute'
+}
+unmute (){
+ssh musicbox '~/bin/unmute'
+}
+```
+```sh
+nano ~/.bashrc
+source  ~/.config/musicbox_func.txt
+```
+You can also map a bluetooth remote or controller and use the `~/bin/scripts` to control the Pi / Pianobar.
+The following [link](https://raspberry-valley.azurewebsites.net/Map-Bluetooth-Controller-using-Python/) explains the basics.
+
+---
 
 ## The boards and distributions that are currently supported
-* Raspberry Pi 4B | Debian, Devuan and Ubuntu
-* Raspberry Pi 2/3/A/B/+ | Debian, Devuan and Ubuntu
-* Raspberry Pi 0/W/B/+ | Debian and Devuan
+* Raspberry Pi 4B | Debian
+* Raspberry Pi 2/3/A/B/+ | Debian
 * [Raspberry Pi Hardware](https://www.raspberrypi.org/documentation/hardware/raspberrypi)
 
 ## Dependencies
@@ -14,7 +78,7 @@ In order to install the required dependencies, run the following command:
 sudo apt install build-essential bison bc git dialog patch dosfstools zip unzip qemu debootstrap \
                  qemu-user-static rsync kmod cpio flex libssl-dev libncurses5-dev parted fakeroot \
                  swig aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl e2fsprogs \
-                 btrfs-progs kpartx crossbuild-essential-arm64 crossbuild-essential-armel
+                 btrfs-progs kpartx crossbuild-essential-arm64
 ```
 
 This has been tested on an AMD64/x86_64 system running on [Debian Buster](https://www.debian.org/releases/buster/debian-installer/).
@@ -40,7 +104,6 @@ make ncompile	# Install native dependencies
 
 ```sh
 make config     # Create user data file (Foundation Kernel)
-make mlconfig   # Create user data file (Mainline Kernel)
 make menu       # Open menu interface
 make dialogrc   # Set builder theme (optional)
 ```
@@ -48,51 +111,19 @@ make dialogrc   # Set builder theme (optional)
 #### Config Menu
 
 ```sh
-Username:       # Your username
-Password:       # Your password
-
 Linux kernel
 Branch:         # Supported: 5.4.y and above
 Menuconfig:     # 1 to run kernel menuconfig
 Crosscompile:   # 1 to cross compile | 0 to native compile
 
-Distributions
-Release:	# Supported: buster, beowulf and 20.04.1
-Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
-Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
-Ubuntu:		# 1 to select (20.04.1/20.10)
+Distribution
+Release:	# Supported: buster
+Debian:		# default
 
 Filesystem
 ext4:		# 1 to select (default)
 btrfs:		# 1 to select
 ```
-
-#### Mainline Config Menu (RPi4B ONLY)
-
-```sh
-Username:       # Your username
-Password:       # Your password
-
-Linux kernel
-Branch:         # Selected kernel branch
-Mainline:       # 1 for kernel x.y-rc above stable
-Menuconfig:     # 1 to run kernel menuconfig
-Crosscompile:   # 1 to cross compile | 0 to native compile
-
-Distributions
-Release:	# Supported: buster, beowulf and 20.04.1
-Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
-Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
-Ubuntu:		# 1 to select (20.04.1/20.10)
-
-Filesystem
-ext4:		# 1 to select (default)
-btrfs:		# 1 to select
-```
-
-### Furthermore
-If interested in building a Raspberry Pi 4B image that uses mainline u-boot and linux
-use our other [builder](https://github.com/pyavitz/debian-image-builder).
 
 #### User defconfig
 
@@ -138,20 +169,10 @@ make rpi3-kernel
 make rpi3-image
 ```
 
-#### Raspberry Pi 0/0W/B/+
-
-```sh
-# ARMv6l
-make rpi-all	# kernel > rootfs > image (run at own risk)
-make rpi-kernel
-make rpi-image
-```
-
 #### Root Filesystems
 
 ```sh
 make rootfs   # arm64
-make rootfsv6 # armel
 ```
 
 #### Miscellaneous
@@ -167,7 +188,6 @@ make check      # Shows latest revision of selected branch
 
 ## Usage
 
-### Debian / Devuan
 #### /boot/rename_to_credentials.txt
 ```sh
 Rename file to credentials.txt and input your wifi information.
@@ -195,28 +215,6 @@ files, whilst leaving rename_to_credentials.txt untouched.
 
 /etc/opt/interfaces.manual
 /etc/opt/wpa_supplicant.manual
-```
-
-### Ubuntu
-#### /boot/rename_to_credentials.txt
-```sh
-Rename file to credentials.txt and input your wifi information.
-
-NAME=" "			# Name of the connection
-SSID=" "			# Service set identifier
-PASSKEY=" "			# Wifi password
-COUNTRYCODE=" "			# Your country code
-
-MANUAL=n			# Set to y to enable a static ip
-IPADDR=" "			# Static ip address
-GATEWAY=" "			# Your Gateway
-DNS=""				# Your preferred dns
-
-CHANGE=y			# Set to n to disable
-HOSTNAME="raspberrypi"		# Set the system's host name
-BRANDING="Raspberry Pi"		# Set ASCII text banner
-
-For headless use: ssh user@ipaddress
 ```
 
 #### Using deb-eeprom ([usb_storage.quirks](https://github.com/pyavitz/rpi-img-builder/issues/17))
@@ -249,7 +247,7 @@ Usage: fetch -opt
 
 fetch -u will list available options and kernel revisions
 ```
-#### Simple wifi helper (Debian / Devuan)
+#### Simple wifi helper
 ```sh
 swh -h
 

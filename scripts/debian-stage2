@@ -124,9 +124,6 @@ fi
 if `grep -Fx "bcm2710" "/root/soc.txt" >/dev/null;`
 	then bcm_sdio_3-b-plus
 fi
-if `grep -Fx "bcm2708" "/root/soc.txt" >/dev/null;`
-	then bcm_sdio_zero-w
-fi
 cd ~
 echo Done.
 
@@ -256,6 +253,18 @@ fi
 echo
 update-ca-certificates -f
 
+### Pianobar and Autopair
+echo
+echo Installing pianobar and autopair
+piano_bar
+echo
+libao_conf
+sed_configs
+stereo_audio
+pulseaudio_init
+echo
+autopair_service
+
 ###  Raspi userland
 rpi_userland
 
@@ -293,22 +302,11 @@ fi
 if `grep -Fx "bcm2710" "/root/soc.txt" >/dev/null;`
 	then bcm2710_modules
 fi
-if `grep -Fx "bcm2708" "/root/soc.txt" >/dev/null;`
-	then bcm_modules
-fi
 
-### Admin or user
-case `grep -Fx "admin=1" "/root/userdata.txt" >/dev/null; echo $?` in
-  0)
-	admin_config
-    ;;
-  1)
-	user_config
-    ;;
-esac
+admin_config
 
 if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
-	then eeprom_choose
+	then admin_eeprom
 fi
 
 ### Clean misc files

@@ -32,7 +32,7 @@ if `grep -Fx "verbose=1" "userdata.txt" >/dev/null;`
 	else set -eu -o pipefail;
 fi
 if ls /usr/bin/toilet > /dev/null 2>&1
-	then toilet -f small --filter metal 'Raspberry Pi';
+	then toilet -f small --filter metal 'Musicbox';
 	else echo -e "${RED}Raspberry Pi Image Builder${FIN}";
 fi
 RAM=0
@@ -43,9 +43,6 @@ if `grep -Fx "bcm2711" "soc.txt" >/dev/null;`
 fi
 if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
 	then DEVICE_SOC="rpi-3";
-fi
-if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
-	then DEVICE_SOC="rpi";
 fi
 IMAGE_DATE="$(date +%F)"
 IMAGE_FILE_NAME="${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img"
@@ -81,38 +78,19 @@ fi
 if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
 	then bcm2710_config > /dev/null 2>&1;
 fi
-if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
-	then bcm2708_config > /dev/null 2>&1;
-fi
 if ls p1/config.txt > /dev/null 2>&1
 	then echo && echo -n "config.txt  " && sleep 1s && echo_nok;
 	else echo && echo -n "config.txt  " && sleep 1s && echo_fail && exit;
 fi
 
 ### extract rootfs
-if `grep -Fx "bcm2711" "soc.txt" >/dev/null;`
-	then aarch64_rootfs;
-fi
-if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
-	then aarch64_rootfs;
-fi
-if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
-	then armel_rootfs;
-fi
+aarch64_rootfs
 
 mkdir -p p2/etc/apt/apt.conf.d p2/etc/dpkg/dpkg.cfg.d
 echo "force-unsafe-io" > "p2/etc/dpkg/dpkg.cfg.d/dpkg-unsafe-io"
 
 # qemu static
-if `grep -Fx "bcm2711" "soc.txt" >/dev/null;`
-	then qemu_arm64;
-fi
-if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
-	then qemu_arm64;
-fi
-if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
-	then qemu_arm;
-fi
+qemu_arm64
 
 if `grep -Fx "verbose=1" "userdata.txt" >/dev/null;`
 	then distro_release;
@@ -142,16 +120,13 @@ fi
 if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
 	then cp output/bcm2710/*.deb p2/root;
 fi
-if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
-	then cp output/bcm2708/*.deb p2/root;
-fi
-cp files/debian/misc/* p2/root
 cp files/debian/patches/* p2/root
 cp files/debian/rules/* p2/root
 cp files/debian/scripts/* p2/root
 cp files/misc/* p2/root
 cp files/scripts/* p2/root
 cp files/users/* p2/root
+cp files/autopair/* p2/root
 cp firmware/{fw-0a5c_21e8.hcd,UPDATE.mem} p2/root
 if `grep -Fx "userscripts=1" "userdata.txt" >/dev/null;`
 	then uscripts_stage1;
@@ -168,15 +143,7 @@ umount p2/dev
 umount p2/boot
 
 # qemu remove static
-if `grep -Fx "bcm2711" "soc.txt" >/dev/null;`
-	then qemu_arm64_remove;
-fi
-if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
-	then qemu_arm64_remove;
-fi
-if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
-	then qemu_arm_remove;
-fi
+qemu_arm64_remove
 cp -f p2/root/kernel.txt .
 rm p2/root/debian-stage2
 rm -f p2/root/*.txt

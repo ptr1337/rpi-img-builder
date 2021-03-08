@@ -1,10 +1,19 @@
 
+NOTICE: Before executing run-setup, make sure you are connected to the internet.
+
 Execute: run-setup
 
 run-setup will ask and perform the following:
-		Locales, Timezone and Keyboard.
+		Locales, Timezone and Keyboard and install Patiobar.
 
-Change passwd: sudo passwd $USER
+Simple wifi helper
 
-Enjoy!
+swh -h
+
+   -s       Scan for SSID's
+   -u       Bring up interface
+   -d       Bring down interface
+   -r       Restart interface
+   -W       Edit wpa supplicant
+   -I       Edit interfaces
 

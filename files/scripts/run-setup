@@ -3,6 +3,15 @@
 echo Running System Setup.
 sleep 1s
 sudo dpkg-reconfigure locales tzdata keyboard-configuration
+### Patiobar
+echo
+echo Installing Patiobar ...
+cd ~
+git clone https://github.com/pyavitz/Patiobar.git
+cd Patiobar
+./install.sh
+cd ~
+echo
 ### Clear Motd
 echo Cleaning motd.
 sleep 1s
@@ -12,6 +21,12 @@ echo Done.
 sleep 1s
 echo
 sudo update-ca-certificates -f
+sleep 1s
 echo
-echo System is ready to go.
+echo Edit the following file ~/.config/pianobar/config
+echo
+cat ~/.config/pianobar/config
+echo
+echo export PATH="$PATH" >> ~/.bashrc
+echo and execute: start
 sudo rm -f /usr/local/bin/run-setup
