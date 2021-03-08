@@ -60,7 +60,6 @@ commands:
 	@echo
 	@echo "  bcm2711                 Raspberry Pi 4B"
 	@echo "  bcm2710                 Raspberry Pi 2/3/A/B/+"
-	@echo "  bcm2708                 Raspberry Pi 0/0W/B/+"
 	@echo
 	@echo "bcm2711:"
 	@echo " "
