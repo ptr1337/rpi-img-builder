@@ -65,9 +65,10 @@ The following [link](https://raspberry-valley.azurewebsites.net/Map-Bluetooth-Co
 
 ---
 
-## The boards and distributions that are currently supported
-* Raspberry Pi 4B | Debian
-* Raspberry Pi 2/3/A/B/+ | Debian
+
+## The boards that are currently supported
+* Raspberry Pi 4B
+* Raspberry Pi 2/3/A/B/+
 * [Raspberry Pi Hardware](https://www.raspberrypi.org/documentation/hardware/raspberrypi)
 
 ## Dependencies
@@ -84,10 +85,6 @@ sudo apt install build-essential bison bc git dialog patch dosfstools zip unzip 
 This has been tested on an AMD64/x86_64 system running on [Debian Buster](https://www.debian.org/releases/buster/debian-installer/).
 
 Alternatively, you can run the command `make ccompile` in this directory.
-
-## Docker
-
-To build using [Docker](https://www.docker.com/), follow the install [instructions](https://docs.docker.com/engine/install/) and use our other [builder](https://github.com/pyavitz/arm-img-builder).
 
 ---
 
@@ -112,7 +109,7 @@ make dialogrc   # Set builder theme (optional)
 
 ```sh
 Linux kernel
-Branch:         # Supported: 5.4.y and above
+Branch:         # Supported: 5.10.y and above
 Menuconfig:     # 1 to run kernel menuconfig
 Crosscompile:   # 1 to cross compile | 0 to native compile
 
@@ -204,8 +201,8 @@ GATEWAY=" "			# Your Gateway
 NAMESERVERS=" "			# Your preferred dns
 
 CHANGE=y			# Set to n to disable
-HOSTNAME="raspberrypi"		# Set the system's host name
-BRANDING="Raspberry Pi"		# Set ASCII text banner
+HOSTNAME="musicbox"		# Set the system's host name
+BRANDING="Musicbox"		# Set ASCII text banner
 
 For headless use: ssh user@ipaddress
 
