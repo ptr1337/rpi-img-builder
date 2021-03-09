@@ -19,15 +19,15 @@ resize2fs /dev/sda2 > /dev/null 2>&1
 }
 
 chk_mmcblk(){
-fsck.fat -trawl /dev/mmcblk0p1 > /dev/null 2>&1
+bash fsck.fat -trawl /dev/mmcblk0p1 > /dev/null 2>&1
 }
 
 chk_mmcblk1(){
-fsck.fat -trawl /dev/mmcblk1p1 > /dev/null 2>&1
+bash fsck.fat -trawl /dev/mmcblk1p1 > /dev/null 2>&1
 }
 
 chk_sda(){
-fsck.fat -trawl /dev/sda1 > /dev/null 2>&1
+bash fsck.fat -trawl /dev/sda1 > /dev/null 2>&1
 }
 
 partition_uuid(){
@@ -64,15 +64,15 @@ create_cmdline > /dev/null 2>&1
 echo
 echo -e "\e[0;31mExpanding root filesystem\e[0m ..."
 if touch -c /dev/mmcblk0 2>/dev/null; then grow_mmcblk;
-        else echo "Checking for USB boot ..." &>/dev/null;
+        else : &>/dev/null;
 fi
 
 if touch -c /dev/mmcblk1 2>/dev/null; then grow_mmcblk1;
-        else echo "" &>/dev/null;
+        else : &>/dev/null;
 fi
 
 if touch -c /dev/sda 2>/dev/null; then grow_sda;
-        else echo "" &>/dev/null;
+        else : &>/dev/null;
 fi
 
 ### Fix boot partition
@@ -80,15 +80,15 @@ echo -e "\e[0;31mRunning fsck on boot partition\e[0m ..."
 umount /boot
 sleep 1s
 if touch -c /dev/mmcblk0 2>/dev/null; then chk_mmcblk;
-        else echo "Checking for USB boot ..." &>/dev/null;
+        else : &>/dev/null;
 fi
 
 if touch -c /dev/mmcblk1 2>/dev/null; then chk_mmcblk1;
-        else echo "" &>/dev/null;
+        else : &>/dev/null;
 fi
 
 if touch -c /dev/sda 2>/dev/null; then chk_sda;
-        else echo "" &>/dev/null;
+        else : &>/dev/null;
 fi
 sleep 1s
 mount /boot
