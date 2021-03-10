@@ -101,40 +101,49 @@ patching(){
 }
 
 cconfig(){
-    echo_cconfig
-    cp -f ../${DEF}/${MYCONFIG} arch/arm/configs/
-    make ARCH=arm ${MYCONFIG}
-    echo_done
+echo_cconfig
+cp -f ../${DEF}/${MYCONFIG} arch/arm/configs/
+if `grep -Fx "crosscompile=1" "../../userdata.txt" >/dev/null;`
+	then make ARCH=arm CC=${ARMV7_CROSS} CROSS_COMPILE=arm-linux-gnueabihf- ${MYCONFIG};
+	else make ARCH=arm CC=${NATIVE} ${MYCONFIG};
+fi
+echo_done
 }
 
 rpi_config(){
-    echo_fconfig
-    cp -f ../${DEF}/bcm2711_defconfig arch/arm/configs/
-    echo CONFIG_MODULE_SIG=y >> arch/arm/configs/bcm2711_defconfig
-    echo CONFIG_MODULE_SIG_KEY='"'certs/signing_key.pem'"' >> arch/arm/configs/bcm2711_defconfig
-    make ARCH=arm bcm2711_defconfig &> /dev/null
-    echo_done
+echo_fconfig
+cp -f ../${DEF}/bcm2711_defconfig arch/arm/configs/
+echo CONFIG_MODULE_SIG=y >> arch/arm/configs/bcm2711_defconfig
+echo CONFIG_MODULE_SIG_KEY='"'certs/signing_key.pem'"' >> arch/arm/configs/bcm2711_defconfig
+if `grep -Fx "crosscompile=1" "../../userdata.txt" >/dev/null;`
+	then make ARCH=arm CC=${ARMV7_CROSS} CROSS_COMPILE=arm-linux-gnueabihf- bcm2711_defconfig &> /dev/null;
+	else make ARCH=arm CC=${NATIVE} bcm2711_defconfig &> /dev/null;
+fi
+echo_done
 }
 
 menu_config(){
-    echo
-    echo_menuconfig
-    sleep 1s
-    make menuconfig
+echo
+echo_menuconfig
+sleep 1s
+if `grep -Fx "crosscompile=1" "../../userdata.txt" >/dev/null;`
+	then make ARCH=arm CC=${ARMV7_CROSS} CROSS_COMPILE=arm-linux-gnueabihf- menuconfig;
+	else make ARCH=arm CC=${NATIVE} menuconfig;
+fi
 }
 
 cross_compile(){
-    echo -e "-- ${GRN}CC${FIN}"
-    echo_build
-    echo 'y' | make -j${CORES} ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- bindeb-pkg
-    rm -f ../*libc*.deb
+echo -e "-- ${GRN}CC${FIN}"
+echo_build
+echo 'y' | make -j${CORES} ARCH=arm CC=${ARMV7_CROSS} CROSS_COMPILE=arm-linux-gnueabihf- bindeb-pkg
+rm -f ../*libc*.deb
 }
 
 native_compile(){
-    echo -e "-- ${GRN}NC${FIN}"
-    echo_build
-    echo 'y' | make -j${CORES} ARCH=arm bindeb-pkg
-    rm -f ../*libc*.deb
+echo -e "-- ${GRN}NC${FIN}"
+echo_build
+echo 'y' | make -j${CORES} ARCH=arm CC=${NATIVE} bindeb-pkg
+rm -f ../*libc*.deb
 }
 
 bcm2711_check(){
