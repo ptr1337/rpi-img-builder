@@ -18,8 +18,8 @@ sudo apt install \
 	swig aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl e2fsprogs \
 	btrfs-progs kpartx crossbuild-essential-armhf crossbuild-essential-armel gcc-8 \
 	gcc-8-arm-linux-gnueabi gcc-9-arm-linux-gnueabi gcc-10-arm-linux-gnueabi gcc-9 \
-	gcc-8-arm-linux-gnueabihf gcc-9-arm-linux-gnueabihf gcc-10-arm-linux-gnueabihf gcc-10 \
-	debian-archive-keyring debian-keyring
+	gcc-8-arm-linux-gnueabihf gcc-9-arm-linux-gnueabihf gcc-10-arm-linux-gnueabihf \
+	gcc-10 debian-archive-keyring debian-keyring
 ```
 
 This has been tested on an AMD64/x86_64 system running on [Ubuntu Focal](https://releases.ubuntu.com/20.04/).
