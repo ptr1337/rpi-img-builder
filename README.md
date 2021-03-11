@@ -11,10 +11,11 @@
 In order to install the required dependencies, run the following command:
 
 ```
-sudo apt install build-essential bison bc git dialog patch dosfstools zip unzip qemu debootstrap \
-                 qemu-user-static rsync kmod cpio flex libssl-dev libncurses5-dev parted fakeroot \
-                 swig aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl e2fsprogs \
-                 btrfs-progs kpartx crossbuild-essential-arm64 crossbuild-essential-armel
+sudo apt install \
+	build-essential bison bc git dialog patch dosfstools zip unzip qemu debootstrap \
+	qemu-user-static rsync kmod cpio flex libssl-dev libncurses5-dev parted fakeroot \
+	swig aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl e2fsprogs \
+	btrfs-progs kpartx crossbuild-essential-arm64 crossbuild-essential-armel make
 ```
 
 This has been tested on an AMD64/x86_64 system running on [Debian Buster](https://www.debian.org/releases/buster/debian-installer/).
@@ -52,15 +53,15 @@ Username:       # Your username
 Password:       # Your password
 
 Linux kernel
-Branch:         # Supported: 5.4.y and above
+Branch:         # Supported: 5.10.y and above
 Menuconfig:     # 1 to run kernel menuconfig
 Crosscompile:   # 1 to cross compile | 0 to native compile
 
 Distributions
-Release:	# Supported: buster, beowulf and 20.04.1
+Release:	# Supported: buster, beowulf and 20.04.2
 Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
 Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
-Ubuntu:		# 1 to select (20.04.1/20.10)
+Ubuntu:		# 1 to select (20.04.1/20.04.2/20.10)
 
 Filesystem
 ext4:		# 1 to select (default)
@@ -80,10 +81,10 @@ Menuconfig:     # 1 to run kernel menuconfig
 Crosscompile:   # 1 to cross compile | 0 to native compile
 
 Distributions
-Release:	# Supported: buster, beowulf and 20.04.1
+Release:	# Supported: buster, beowulf and 20.04.2
 Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
 Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
-Ubuntu:		# 1 to select (20.04.1/20.10)
+Ubuntu:		# 1 to select (20.04.1/20.04.2/20.10)
 
 Filesystem
 ext4:		# 1 to select (default)
