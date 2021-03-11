@@ -116,7 +116,7 @@ ccompile:
 	distro-info-data crossbuild-essential-armhf crossbuild-essential-armel \
 	gcc-8-arm-linux-gnueabi gcc-9-arm-linux-gnueabi gcc-10-arm-linux-gnueabi \
 	gcc-8-arm-linux-gnueabihf gcc-9-arm-linux-gnueabihf gcc-10-arm-linux-gnueabihf \
-	gcc-8 gcc-9 gcc-10 debian-archive-keyring debian-keyring
+	gcc-8 gcc-9 gcc-10 debian-archive-keyring debian-keyring make
 	
 	 
 
@@ -126,7 +126,8 @@ ncompile:
 	dosfstools zip unzip qemu debootstrap qemu-user-static rsync \
 	kmod cpio flex libssl-dev libncurses5-dev parted fakeroot swig \
 	aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl \
-	e2fsprogs kpartx gcc-8 gcc-9 gcc-10 debian-archive-keyring debian-keyring
+	e2fsprogs kpartx gcc-8 gcc-9 gcc-10 debian-archive-keyring make \
+	debian-keyring
 
 # Raspberry Pi 4 | armv7
 kernel:
