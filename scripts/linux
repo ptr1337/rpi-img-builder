@@ -19,7 +19,6 @@ done
 }
 
 if [ -f "$UD" ]; then
-    echo ""
     :;
 else 
     userdata
