@@ -42,7 +42,7 @@ help:
 	@echo "\e[1;37m             **************************"
 	@echo "\e[1;37mUsage:\e[0m "
 	@echo
-	@echo "  make ccompile          Install all dependencies"
+	@echo "  make ccompile          Install cross dependencies"
 	@echo "  make ncompile          Install native dependencies"
 	@echo "  make config            Create user data file"
 	@echo "  make menu              User menu interface"
@@ -93,7 +93,7 @@ ccompile:
 	aria2 pv toilet figlet lsb-release xz-utils curl e2fsprogs btrfs-progs \
 	distro-info-data crossbuild-essential-arm64 gcc-8 gcc-9 gcc-10 kpartx \
 	gcc-8-aarch64-linux-gnu gcc-9-aarch64-linux-gnu gcc-10-aarch64-linux-gnu \
-	debian-archive-keyring debian-keyring
+	debian-archive-keyring debian-keyring make
 
 ncompile:
 	# Install native dependencies:
@@ -101,7 +101,8 @@ ncompile:
 	dosfstools zip unzip qemu debootstrap qemu-user-static rsync \
 	kmod cpio flex libssl-dev libncurses5-dev parted fakeroot swig \
 	aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl \
-	e2fsprogs btrfs-progs kpartx gcc-8 gcc-9 gcc-10 debian-archive-keyring debian-keyring
+	e2fsprogs btrfs-progs kpartx gcc-8 gcc-9 gcc-10 debian-archive-keyring \
+	debian-keyring make
 
 # Raspberry Pi 4 | aarch64
 kernel:

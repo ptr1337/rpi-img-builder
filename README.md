@@ -81,7 +81,7 @@ sudo apt install \
 	qemu-user-static rsync kmod cpio flex libssl-dev libncurses5-dev parted fakeroot \
 	swig aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl e2fsprogs \
 	btrfs-progs kpartx crossbuild-essential-arm64 gcc-8 gcc-9 gcc-10 debian-keyring \
-	gcc-8-aarch64-linux-gnu gcc-9-aarch64-linux-gnu gcc-10-aarch64-linux-gnu \
+	gcc-8-aarch64-linux-gnu gcc-9-aarch64-linux-gnu gcc-10-aarch64-linux-gnu make \
 	debian-archive-keyring
 ```
 
@@ -96,7 +96,7 @@ Alternatively, you can run the command `make ccompile` in this directory.
 #### Install dependencies
 
 ```sh
-make ccompile	# Install all dependencies
+make ccompile	# Install cross dependencies
 make ncompile	# Install native dependencies
 ```
 
