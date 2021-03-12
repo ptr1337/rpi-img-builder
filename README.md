@@ -33,7 +33,7 @@ Alternatively, you can run the command `make ccompile` in this directory.
 #### Install dependencies
 
 ```sh
-make ccompile	# Install all dependencies
+make ccompile	# Install cross dependencies
 make ncompile	# Install native dependencies
 ```
 
