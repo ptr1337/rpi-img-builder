@@ -30,7 +30,7 @@ Alternatively, you can run the command `make ccompile` in this directory.
 #### Install dependencies
 
 ```sh
-make ccompile	# Install all dependencies
+make ccompile	# Install cross dependencies
 make ncompile	# Install native dependencies
 ```
 
@@ -50,7 +50,7 @@ Username:       # Your username
 Password:       # Your password
 
 Linux kernel
-Branch:         # Supported: 5.4.y and above
+Branch:         # Supported: 5.10.y and above
 Menuconfig:     # 1 to run kernel menuconfig
 Crosscompile:   # 1 to cross compile | 0 to native compile
 
