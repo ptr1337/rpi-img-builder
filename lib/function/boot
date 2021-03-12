@@ -289,7 +289,7 @@ tee p1/config.txt <<EOF
 # For more options and information see
 # http://rpf.io/configtxt
 # Some settings may impact device functionality. See link above for details
-initramfs initrd.gz
+#initramfs initrd.gz
 
 # uncomment if you get no picture on HDMI for a default "safe" mode
 #hdmi_safe=1
