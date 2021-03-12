@@ -33,7 +33,7 @@ To build using [Docker](https://www.docker.com/), follow the install [instructio
 #### Install dependencies
 
 ```sh
-make ccompile	# Install all dependencies
+make ccompile	# Install cross dependencies
 make ncompile	# Install native dependencies
 ```
 
