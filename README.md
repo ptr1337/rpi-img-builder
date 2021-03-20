@@ -51,7 +51,7 @@ make dialogrc   # Set builder theme (optional)
 ```sh
 Username:       # Your username
 Password:       # Your password
-Enable root:	# Set root password to `toor`
+Enable root:	# 1 to enable (set root password to `toor`)
 
 Linux kernel
 Branch:         # Supported: 5.10.y and above
@@ -78,7 +78,7 @@ Name:		# Name of _defconfig (Must be placed in defconfig dir.)
 ```sh
 Username:       # Your username
 Password:       # Your password
-Enable root:	# Set root password to `toor`
+Enable root:	# 1 to enable (set root password to `toor`)
 
 Linux kernel
 Branch:         # Selected kernel branch
@@ -105,7 +105,7 @@ Name:		# Name of _defconfig (Must be placed in defconfig dir.)
 If interested in building a Raspberry Pi 4B image that uses mainline u-boot and linux
 use our other [builder](https://github.com/pyavitz/debian-image-builder).
 
-### User defconfig
+#### User defconfig
 
 ```sh
 # config placement: defconfig/$NAME_defconfig
