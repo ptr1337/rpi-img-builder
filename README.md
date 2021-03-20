@@ -51,6 +51,7 @@ make dialogrc   # Set builder theme (optional)
 ```sh
 Username:       # Your username
 Password:       # Your password
+Enable root:	# Sets root password to `toor`
 
 Linux kernel
 Branch:         # Supported: 5.10.y and above
@@ -62,6 +63,10 @@ Release:	# Supported: buster, beowulf and focal
 Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
 Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
 Ubuntu:		# 1 to select (focal/groovy)
+
+Customize (user defconfig)
+Defconfig:	# 1 to enable
+Name:		# Name of _defconfig (Must be placed in defconfig dir.)
 ```
 
 #### Mainline Config Menu (RPi4B ONLY)
@@ -69,6 +74,7 @@ Ubuntu:		# 1 to select (focal/groovy)
 ```sh
 Username:       # Your username
 Password:       # Your password
+Enable root:	# Sets root password to `toor`
 
 Linux kernel
 Branch:         # Selected kernel branch
@@ -81,18 +87,21 @@ Release:	# Supported: buster, beowulf and focal
 Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
 Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
 Ubuntu:		# 1 to select (focal/groovy)
+
+Customize (user defconfig)
+Defconfig:	# 1 to enable
+Name:		# Name of _defconfig (Must be placed in defconfig dir.)
 ```
 ### Furthermore
 If interested in building a Raspberry Pi 4B image that uses mainline u-boot and linux
 use our other [builder](https://github.com/pyavitz/debian-image-builder).
 
-#### User defconfig
+### User defconfig
 
 ```sh
-nano userdata.txt
-# place config in defconfig directory
-custom_defconfig=1
-MYCONFIG="nameofyour_defconfig"
+# config placement: defconfig/$NAME_defconfig
+The config menu will append _defconfig to the end of the name
+in the userdata.txt file.
 ```
 
 #### User patches
@@ -106,7 +115,7 @@ compilation. This works for both Foundation and Mainline kernels.
 ```sh
 nano userdata.txt
 # place scripts in files/userscripts directory
-userscripts=0	# 1 to enable | 0 to disable	
+userscripts=0	# 1 to enable
 ``` 
 
 ## Command list
