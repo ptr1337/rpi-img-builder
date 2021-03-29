@@ -1,8 +1,8 @@
 # menu
 MENU=./lib/dialog/menu
 CONF=./lib/dialog/config
-MLCONF=./lib/dialog/ml_config
-ADMIN=./lib/dialog/admin_config
+MLCONF=./lib/dialog/mlconfig
+ADMIN=./lib/dialog/admin
 DIALOGRC=$(shell cp -f lib/dialogrc ~/.dialogrc)
 
 # rootfs
@@ -56,7 +56,7 @@ help:
 	@echo "  make ncompile          Install native dependencies"
 	@echo "  make config            Create user data file"
 	@echo "  make menu              User menu interface"
-	@echo "  make cleanup           Clean up image errors"
+	@echo "  make cleanup           Clean up rootfs and image errors"
 	@echo "  make purge             Remove source directory"
 	@echo "  make purge-all         Remove source and output directory"
 	@echo "  make commands          List more commands"
@@ -116,7 +116,7 @@ ccompile:
 	distro-info-data crossbuild-essential-armhf crossbuild-essential-armel \
 	gcc-8-arm-linux-gnueabi gcc-9-arm-linux-gnueabi gcc-10-arm-linux-gnueabi \
 	gcc-8-arm-linux-gnueabihf gcc-9-arm-linux-gnueabihf gcc-10-arm-linux-gnueabihf \
-	gcc-8 gcc-9 gcc-10 debian-archive-keyring debian-keyring make
+	gcc-8 gcc-9 gcc-10 debian-archive-keyring debian-keyring make libelf-dev
 	
 	 
 
@@ -127,7 +127,7 @@ ncompile:
 	kmod cpio flex libssl-dev libncurses5-dev parted fakeroot swig \
 	aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl \
 	e2fsprogs kpartx gcc-8 gcc-9 gcc-10 debian-archive-keyring make \
-	debian-keyring
+	debian-keyring libelf-dev
 
 # Raspberry Pi 4 | armv7
 kernel:

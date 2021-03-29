@@ -19,7 +19,7 @@ sudo apt install \
 	btrfs-progs kpartx crossbuild-essential-armhf crossbuild-essential-armel gcc-8 \
 	gcc-8-arm-linux-gnueabi gcc-9-arm-linux-gnueabi gcc-10-arm-linux-gnueabi gcc-9 \
 	gcc-8-arm-linux-gnueabihf gcc-9-arm-linux-gnueabihf gcc-10-arm-linux-gnueabihf \
-	gcc-10 debian-archive-keyring debian-keyring
+	gcc-10 debian-archive-keyring debian-keyring libelf-dev
 ```
 
 This has been tested on an AMD64/x86_64 system running on [Ubuntu Focal](https://releases.ubuntu.com/20.04/).
@@ -58,11 +58,11 @@ Branch:         # Supported: 5.10.y and above
 Menuconfig:     # 1 to run kernel menuconfig
 Crosscompile:   # 1 to cross compile | 0 to native compile
 
-Distributions
-Release:	# Supported: buster, beowulf and focal
-Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
-Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
-Ubuntu:		# 1 to select (focal/groovy)
+Distribution
+Distro:		# Supported: debian, devuan and ubuntu
+Release:	# Debian: buster, bullseye, testing, unstable and sid
+		# Devuan: beowulf, testing, unstable and ceres
+		# Ubuntu: focal, groovy, and hirsute
 
 Customize (user defconfig)
 Defconfig:	# 1 to enable
@@ -82,11 +82,11 @@ Mainline:       # 1 for kernel x.y-rc above stable
 Menuconfig:     # 1 to run kernel menuconfig
 Crosscompile:   # 1 to cross compile | 0 to native compile
 
-Distributions
-Release:	# Supported: buster, beowulf and focal
-Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
-Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
-Ubuntu:		# 1 to select (focal/groovy)
+Distribution
+Distro:		# Supported: debian, devuan and ubuntu
+Release:	# Debian: buster, bullseye, testing, unstable and sid
+		# Devuan: beowulf, testing, unstable and ceres
+		# Ubuntu: focal, groovy, and hirsute
 
 Customize (user defconfig)
 Defconfig:	# 1 to enable
@@ -158,7 +158,7 @@ make rootfsv6 # armel
 #### Miscellaneous
 
 ```sh
-make cleanup    # Clean up image errors
+make cleanup    # Clean up rootfs and image errors
 make purge      # Remove source directory
 make purge-all  # Remove source and output directory
 make commands   # List more commands
