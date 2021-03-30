@@ -109,11 +109,11 @@ commands:
 # armv7
 ccompile:
 	# Install all dependencies:
-	sudo apt install build-essential bison bc git dialog patch \
-	dosfstools zip unzip qemu debootstrap qemu-user-static rsync \
-	kmod cpio flex libssl-dev libncurses5-dev parted fakeroot swig \
+	sudo apt install build-essential bison bc git dialog patch kpartx \
+	dosfstools zip unzip qemu debootstrap qemu-user-static rsync make \
+	kmod cpio flex libssl-dev libncurses5-dev parted fakeroot swig libelf-dev \
 	aria2 pv toilet figlet crossbuild-essential-armhf crossbuild-essential-armel \
-	distro-info-data lsb-release xz-utils curl e2fsprogs kpartx make
+	distro-info-data lsb-release xz-utils curl e2fsprogs
 
 ncompile:
 	# Install native dependencies:
@@ -121,7 +121,7 @@ ncompile:
 	dosfstools zip unzip qemu debootstrap qemu-user-static rsync \
 	kmod cpio flex libssl-dev libncurses5-dev parted fakeroot swig \
 	aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl \
-	e2fsprogs kpartx make
+	e2fsprogs kpartx make libelf-dev
 
 # Raspberry Pi 4 | armv7
 kernel:
