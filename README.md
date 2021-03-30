@@ -82,7 +82,7 @@ sudo apt install \
 	swig aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl e2fsprogs \
 	btrfs-progs kpartx crossbuild-essential-arm64 gcc-8 gcc-9 gcc-10 debian-keyring \
 	gcc-8-aarch64-linux-gnu gcc-9-aarch64-linux-gnu gcc-10-aarch64-linux-gnu make \
-	debian-archive-keyring
+	debian-archive-keyring libelf-dev
 ```
 
 This has been tested on an AMD64/x86_64 system running on [Ubuntu Focal](https://releases.ubuntu.com/20.04/).
