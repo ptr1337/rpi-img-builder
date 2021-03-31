@@ -23,9 +23,7 @@ if [ -f "$UD" ]; then
 else 
     userdata
 fi
-
 validation
-
-if `grep -Fx "debian=1" "userdata.txt" >/dev/null;`
+if `grep -Fx 'DISTRO="debian"' "userdata.txt" >/dev/null;`
 	then make debianos;
 fi

@@ -117,24 +117,6 @@ chown root:root /etc/modules
 echo Done.
 }
 
-### Cypress firmware
-# https://community.cypress.com/gfawx74859/attachments/gfawx74859/resourcelibrary/966/1/cypress-fmac-v4.14.77-2020_0115.zip
-cypress_firmware(){
-echo
-echo Adding brcm firmware from cypress.
-sleep 1s
-mkdir cypress
-cd cypress
-wget -cq --show-progress https://github.com/pyavitz/binary/releases/download/060420/cypress-fmac-v4.14.77-2020_0115.zip
-unzip -qq cypress-fmac-v4.14.77-2020_0115.zip
-tar -xf cypress-firmware-v4.14.77-2020_0115.tar.gz
-#rm -f firmware/*pcie*
-cp -f firmware/* /lib/firmware/brcm/
-cd ~
-rm -fdr cypress
-echo Done.
-}
-
 # Zramswap setup
 zramswap_config(){
 sed -i 's/#ALLOCATION=256/ALLOCATION=1024/g' /etc/default/zramswap
@@ -210,6 +192,23 @@ rm -f UPDATE.mem
 echo Done.
 }
 
+# https://community.cypress.com/gfawx74859/attachments/gfawx74859/resourcelibrary/966/1/cypress-fmac-v4.14.77-2020_0115.zip
+cypress_firmware(){
+echo
+echo Adding brcm firmware from cypress.
+sleep 1s
+mkdir cypress
+cd cypress
+wget -cq --show-progress https://github.com/pyavitz/binary/releases/download/060420/cypress-fmac-v4.14.77-2020_0115.zip
+unzip -qq cypress-fmac-v4.14.77-2020_0115.zip
+tar -xf cypress-firmware-v4.14.77-2020_0115.tar.gz
+#rm -f firmware/*pcie*
+cp -f firmware/* /lib/firmware/brcm/
+cd ~
+rm -fdr cypress
+echo Done.
+}
+
 # Initrd script
 initrd_script(){
 cd ~
@@ -249,9 +248,7 @@ echo_done
 shrink(){
 echo
 chmod +x scripts/shrink
-if `grep -Fx "debian=1" "userdata.txt" >/dev/null;`
-	then scripts/shrink -s ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img;
-fi
+scripts/shrink -s ${DEVICE_SOC}-${DISTRO}-${DISTRO_VERSION}-${IMAGE_DATE}.img
 echo
 fix_cmdline
 }
@@ -259,9 +256,7 @@ fix_cmdline
 fix_cmdline(){
 echo 'LOOP1="/dev/mapper/' > kpart1
 echo 'LOOP2="/dev/mapper/' >> kpart1
-if `grep -Fx "debian=1" "userdata.txt" >/dev/null;`
-	then IMAGE_FILE="${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img";
-fi
+IMAGE_FILE="${DEVICE_SOC}-${DISTRO}-${DISTRO_VERSION}-${IMAGE_DATE}.img"
 kpartx="$(kpartx -av $IMAGE_FILE)"
 echo "$kpartx"
 grep -o 'loop.p.' <<<"$kpartx" > kpart2

@@ -33,11 +33,11 @@ fi
 }
 
 aarch64_extract(){
-tar -xf debian-${DISTRO_VERSION}-rootfs-aarch64.tar.xz -C p2/
+tar -xf ${DISTRO}-${DISTRO_VERSION}-rootfs-aarch64.tar.xz -C p2/
 }
 
 aarch64_rootfs(){
-if ls debian-${DISTRO_VERSION}-rootfs-aarch64.tar.xz > /dev/null 2>&1
+if ls ${DISTRO}-${DISTRO_VERSION}-rootfs-aarch64.tar.xz > /dev/null 2>&1
 	then echo && echo -n "Extracting rootfs " && aarch64_extract && echo_bdone;
 	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
 fi
@@ -53,12 +53,12 @@ mv -f firmware-nonfree-master.tar.gz firmware/
 
 rename_image(){
 source kernel.txt
-mv -f ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-musicbox-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
+mv -f ${DEVICE_SOC}-${DISTRO}-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-musicbox-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
 }
 
 compress_image(){
 source kernel.txt
-mv -f ${DEVICE_SOC}-debian-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-musicbox-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
+mv -f ${DEVICE_SOC}-${DISTRO}-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-musicbox-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
 xz -zev --threads=${CORES} ${DEVICE_SOC}-musicbox-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
 }
 
@@ -143,15 +143,8 @@ rpi_switch (){
 sh -c 'echo 0 > /sys/devices/platform/leds/leds/led1/brightness'
 }
 
-ml_switch (){
-sh -c 'echo 0 > /sys/devices/platform/leds/leds/PWR/brightness'
-}
-
 if ls /sys/devices/platform/leds/leds/led1/brightness > /dev/null 2>&1;
 	then rpi_switch;
-fi
-if ls /sys/devices/platform/leds/leds/PWR/brightness > /dev/null 2>&1;
-	then ml_switch;
 fi
 
 EOF

@@ -1,8 +1,6 @@
 # menu
 MENU=./lib/dialog/menu
 CONF=./lib/dialog/config
-MLCONF=./lib/dialog/ml_config
-ADMIN=./lib/dialog/admin_config
 DIALOGRC=$(shell cp -f lib/dialogrc ~/.dialogrc)
 
 # rootfs
@@ -81,7 +79,7 @@ commands:
 	@echo
 	@echo "  make dialogrc		  Set builder theme"
 	@echo "  make check		  Shows latest revision of selected branch"
-	@echo "  make helper		  Reduce the time it takes to create a new image"
+	@echo "  make helper		  Download a binary Linux package"
 	@echo
 
 # aarch64
