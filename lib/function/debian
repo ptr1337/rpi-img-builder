@@ -121,15 +121,8 @@ rpi_switch (){
 sh -c 'echo 0 > /sys/devices/platform/leds/leds/led0/brightness'
 }
 
-ml_switch (){
-sh -c 'echo 0 > /sys/devices/platform/leds/leds/ACT/brightness'
-}
-
 if ls /sys/devices/platform/leds/leds/led0/brightness > /dev/null 2>&1;
 	then rpi_switch;
-fi
-if ls /sys/devices/platform/leds/leds/ACT/brightness > /dev/null 2>&1;
-	then ml_switch;
 fi
 
 EOF
