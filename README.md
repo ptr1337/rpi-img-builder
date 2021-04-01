@@ -155,8 +155,7 @@ userscripts=0	# 1 to enable | 0 to disable
 ```sh
 # AARCH64
 make all	# kernel > rootfs > image (run at own risk)
-make kernel	# Foundation
-make mainline	# Mainline
+make kernel
 make image
 ```
 
