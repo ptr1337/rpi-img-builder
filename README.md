@@ -19,7 +19,7 @@ sudo apt install \
 	kpartx crossbuild-essential-armhf crossbuild-essential-armel make libelf-dev
 ```
 
-This has been tested on an AMD64/x86_64 system running on [Debian Buster](https://www.debian.org/releases/buster/debian-installer/).
+This has been tested on an AMD64/x86_64 system running on Debian Buster and Devuan Beowulf.
 
 Alternatively, you can run the command `make ccompile` in this directory.
 
