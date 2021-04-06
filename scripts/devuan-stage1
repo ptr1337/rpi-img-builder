@@ -179,7 +179,16 @@ if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
 fi
 cp -f p2/root/kernel.txt .
 rm p2/root/devuan-stage2
-rm -f p2/root/*.txt
+if `grep -Fx "bcm2708" "soc.txt" >/dev/null;`
+	then cp -f p2/root/bcm2708.pkglist .
+fi
+if `grep -Fx "bcm2710" "soc.txt" >/dev/null;`
+	then cp -f p2/root/bcm2710.pkglist .
+fi
+if `grep -Fx "bcm2711" "soc.txt" >/dev/null;`
+	then cp -f p2/root/bcm2711.pkglist .
+fi
+rm -f p2/root/{*.txt,*.pkglist}
 rm -f p2/var/cache/debconf/*
 
 if [ -n "$PROXY" ] ; then
