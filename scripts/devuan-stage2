@@ -327,6 +327,20 @@ echo Adding services
 enable_services > /dev/null 2>&1
 echo Done.
 
+# Creating package list
+package_list(){
+if `grep -Fx "bcm2708" "/root/soc.txt" >/dev/null;`
+	then apt list --installed > /root/bcm2708.pkglist
+fi
+if `grep -Fx "bcm2710" "/root/soc.txt" >/dev/null;`
+	then apt list --installed > /root/bcm2710.pkglist
+fi
+if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
+	then apt list --installed > /root/bcm2711.pkglist
+fi
+}
+package_list > /dev/null 2>&1
+
 ###### Finish
 echo
 echo Moving out of stage2 and creating image
