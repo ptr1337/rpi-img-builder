@@ -131,14 +131,14 @@ menu_config(){
 cross_compile(){
     echo -e "-- ${GRN}CC${FIN}"
     echo_build
-    echo 'y' | make -j${CORES} ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bindeb-pkg
+    echo 'y' | make -j${CORES} KBUILD_BUILD_HOST=${KBHOST} ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bindeb-pkg
     rm -f ../*libc*.deb
 }
 
 native_compile(){
     echo -e "-- ${GRN}NC${FIN}"
     echo_build
-    echo 'y' | make -j${CORES} ARCH=arm64 bindeb-pkg
+    echo 'y' | make -j${CORES} KBUILD_BUILD_HOST=${KBHOST} ARCH=arm64 bindeb-pkg
     rm -f ../*libc*.deb
 }
 
