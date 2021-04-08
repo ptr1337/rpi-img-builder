@@ -129,13 +129,13 @@ fi
 armv8_ccompile(){
 echo -e "-- ${GRN}CC${FIN}"
 echo_build
-echo 'y' | make -j${CORES} ARCH=arm64 CC=${ARM64_CROSS} CROSS_COMPILE=aarch64-linux-gnu- bindeb-pkg
+echo 'y' | make -j${CORES} KBUILD_BUILD_HOST=${KBHOST} ARCH=arm64 CC=${ARM64_CROSS} CROSS_COMPILE=aarch64-linux-gnu- bindeb-pkg
 }
 
 armv8_ncompile(){
 echo -e "-- ${GRN}NC${FIN}"
 echo_build
-echo 'y' | make -j${CORES} ARCH=arm64 CC=${NATIVE} bindeb-pkg
+echo 'y' | make -j${CORES} KBUILD_BUILD_HOST=${KBHOST} ARCH=arm64 CC=${NATIVE} bindeb-pkg
 }
 
 ccpatch(){
