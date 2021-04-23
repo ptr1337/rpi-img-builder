@@ -155,6 +155,7 @@ chown root:root /etc/opt/eeprom
 }
 
 bcm_sdio_3-b-plus(){
+wget -cq --show-progress https://raw.githubusercontent.com/openwrt/cypress-nvram/master/brcmfmac43430-sdio.raspberrypi%2C3-model-b.txt
 wget -cq --show-progress https://raw.githubusercontent.com/openwrt/cypress-nvram/master/brcmfmac43455-sdio.raspberrypi%2C3-model-b-plus.txt
 wget -cq --show-progress https://raw.githubusercontent.com/RPi-Distro/firmware-nonfree/master/brcm/brcmfmac43430-sdio.raspberrypi-rpi.txt
 }
@@ -162,6 +163,7 @@ wget -cq --show-progress https://raw.githubusercontent.com/RPi-Distro/firmware-n
 bcm_sdio_4-b(){
 wget -cq --show-progress https://raw.githubusercontent.com/openwrt/cypress-nvram/master/brcmfmac43455-sdio.raspberrypi%2C4-model-b.txt
 }
+
 
 network_setup(){
 rm -f /etc/network/interfaces
