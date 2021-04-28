@@ -28,7 +28,6 @@ fi
 EXT4="2200MB"
 
 # debian
-
 DEBIAN1="tzdata keyboard-configuration sudo man-db dbus initramfs-tools \
 	e2fsprogs fonty-rg patch curl wget apt-transport-https dirmngr \
 	cmake rsync psmisc parted pv zip unzip aria2 libell0"
