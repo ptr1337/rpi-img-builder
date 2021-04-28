@@ -9,8 +9,8 @@ ROOTFSV8=sudo ./scripts/rootfs
 
 # kernel
 SELECT=./scripts/select
-XLINUX=./scripts/linux
-LINUX=sudo ./scripts/linux
+XLINUX=./scripts/rpi-linux
+LINUX=sudo ./scripts/rpi-linux
 
 # stages
 DEB=./scripts/debian-stage1
