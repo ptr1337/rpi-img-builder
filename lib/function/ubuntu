@@ -143,7 +143,7 @@ mv -f darkgreen.ini /usr/share/mc/skins/darkgreen.ini
 mv -f darkred.ini /usr/share/mc/skins/darkred.ini
 echo Done.
 echo
-echo Adding mc ini and nanorc
+echo Adding mc ini and nanorc.
 sleep 1s
 mkdir -p /root/.config/mc
 mv -f root-ini /root/.config/mc/ini
@@ -204,7 +204,7 @@ mv -f darkgreen.ini /usr/share/mc/skins/darkgreen.ini
 mv -f darkred.ini /usr/share/mc/skins/darkred.ini
 echo Done.
 echo
-echo Adding mc ini and nanorc
+echo Adding mc ini and nanorc.
 sleep 1s
 mkdir -p /root/.config/mc
 mv -f root-ini /root/.config/mc/ini
@@ -345,53 +345,6 @@ rm -fdR pi-bluetooth*
 echo Done.
 }
 
-bluez_stable(){
-BLUEZ_VERSION="5.55"
-echo
-echo Updating bluetooth.
-sleep 1s
-wget -cq --show-progress https://github.com/pyavitz/binary/releases/download/060420/bluez-${BLUEZ_VERSION}-ubuntu-armhf.tar.xz
-tar xf bluez-${BLUEZ_VERSION}-ubuntu-armhf.tar.xz
-rm -f bluez-${BLUEZ_VERSION}-ubuntu-armhf.tar.xz
-cd bluez-${BLUEZ_VERSION}-ubuntu-armhf
-rm -f *dbg_${BLUEZ_VERSION}*
-rm -f *cups_${BLUEZ_VERSION}*
-rm -f *source_${BLUEZ_VERSION}*
-dpkg -i *.deb
-cd ..
-rm -fdR bluez-${BLUEZ_VERSION}-ubuntu-armhf
-apt-mark hold bluez
-echo Done.
-}
-
-bluez_unstable(){
-BLUEZ_VERSION="5.55"
-echo
-echo Updating bluetooth.
-sleep 1s
-wget -cq --show-progress https://github.com/pyavitz/binary/releases/download/060420/bluez-${BLUEZ_VERSION}-ubuntu-unstable-armhf.tar.xz
-tar xf bluez-${BLUEZ_VERSION}-ubuntu-unstable-armhf.tar.xz
-rm -f bluez-${BLUEZ_VERSION}-ubuntu-unstable-armhf.tar.xz
-cd bluez-${BLUEZ_VERSION}-ubuntu-unstable-armhf
-rm -f *dbg_${BLUEZ_VERSION}*
-rm -f *cups_${BLUEZ_VERSION}*
-rm -f *source_${BLUEZ_VERSION}*
-dpkg -i *.deb
-cd ..
-rm -fdR bluez-${BLUEZ_VERSION}-ubuntu-unstable-armhf
-apt-mark hold bluez
-echo Done.
-}
-
-bluez_choose(){
-if `grep -Fx 'DISTRO_VERSION="focal"' "/root/userdata.txt" >/dev/null;`
-	then bluez_stable;
-fi
-if `grep -Fx 'DISTRO_VERSION="groovy"' "/root/userdata.txt" >/dev/null;`
-	then bluez_unstable;
-fi
-}
-
 led_switches(){
 echo
 echo Creating power led switch.
@@ -432,7 +385,7 @@ update-rc.d firstboot defaults 2
 systemctl enable firstboot
 systemctl enable credentials
 systemctl enable governor
-systemctl enable serial-getty@ttyUSB0.service
+#systemctl enable serial-getty@ttyUSB0.service
 if ls /etc/systemd/system/multi-user.target.wants/ondemand.service
 	then systemctl disable ondemand;
 fi

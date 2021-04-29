@@ -28,7 +28,10 @@ set_timezone
 
 apt upgrade -y
 apt dist-upgrade -y
-apt install -y ${DEVUAN1}
+apt install -y openssh-client openssh-server --no-install-recommends
+apt install -y ${DEVUAN1} ${DEVUAN2} ${FIRMWARE}
+apt -y clean
+apt -y autoclean
 
 #### Scripts
 cd ~
@@ -51,6 +54,8 @@ wget -cq --show-progress ${URL}swh
 mv -f swh /usr/local/bin/
 wget -cq --show-progress ${URL}governor
 mv -f governor /usr/local/bin/
+wget -cq --show-progress ${URL}update-fw
+mv -f update-fw /usr/local/bin/
 case `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null; echo $?` in
   0)
 	wget -cq --show-progress ${URL}write2usb
@@ -97,34 +102,6 @@ chown root:root /etc/update-motd.d/15-brand
 chown root:root /etc/update-motd.d/20-sysinfo
 echo Done.
 
-#### Software
-echo
-echo Installing needed packages.
-sleep 1s
-apt -y clean
-apt -y autoclean
-apt update
-apt install -y openssh-client openssh-server --no-install-recommends
-apt install -y ${DEVUAN2} ${FIRMWARE}
-
-#### Adding firmware
-echo
-echo Adding pi firmware.
-sleep 1s
-brcm_firmware
-cd /lib/firmware/brcm
-if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
-	then bcm_sdio_4-b
-fi
-if `grep -Fx "bcm2710" "/root/soc.txt" >/dev/null;`
-	then bcm_sdio_3-b-plus
-fi
-if `grep -Fx "bcm2708" "/root/soc.txt" >/dev/null;`
-	then bcm_sdio_zero-w
-fi
-cd ~
-echo Done.
-
 #### Extra firmware
 extra_firmware
 
@@ -165,21 +142,10 @@ chown root:root /etc/motd
 chown root:root /etc/new.motd
 echo Done.
 
-#### Clean up packages
-echo
-echo Cleaning up.
-sleep 1s
-apt -y autoremove
-apt -y clean
-apt -y autoclean
-echo Done.
-
 ###
 echo
 echo Adding regdb.
 sleep 1s
-apt update
-apt install -y crda
 git clone https://kernel.googlesource.com/pub/scm/linux/kernel/git/sforshee/wireless-regdb
 echo
 echo Moving db files.
@@ -195,6 +161,7 @@ echo Done.
 echo
 echo Building raspi-sys-mods package.
 sleep 1s
+apt update
 apt install -y debhelper d-shlibs rfkill dosfstools psmisc
 git clone https://github.com/RPi-Distro/raspberrypi-sys-mods.git
 mv raspberrypi-sys-mods.patch raspberrypi-sys-mods/
@@ -217,14 +184,6 @@ if ls /etc/apt/preferences.d/3rd_parties.pref > /dev/null 2>&1
 fi
 echo Done.
 
-### Bluez firmware.
-echo
-echo Installing bluetooth.
-sleep 1s
-apt install -y bluetooth bluez bluez-tools
-echo Done.
-bluez_firmware_choose
-
 ### Pi Bluetooth
 echo
 echo Building pi bluetooth package.
@@ -237,24 +196,6 @@ cd ~
 dpkg -i pi-bluetooth_*.deb
 rm -fdR pi-bluetooth*
 echo Done.
-
-### Upgrading bluez
-if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
-	then bluez_choose
-fi
-if `grep -Fx "bcm2710" "/root/soc.txt" >/dev/null;`
-	then bluez_choose
-fi
-
-### Cypress wifi firmware
-if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
-	then : ;
-	else cypress_firmware
-fi
-
-### Certificates
-echo
-update-ca-certificates -f
 
 ###  Raspi userland
 rpi_userland
@@ -324,13 +265,13 @@ echo 'SUBSYSTEM=="vc-mem",GROUP="video",MODE="0660"' >> /etc/udev/rules.d/10-vch
 
 # Load services
 echo
-echo Adding services
+echo Adding services.
 enable_services > /dev/null 2>&1
 echo Done.
 
 ###### Finish
 echo
-echo Moving out of stage2 and creating image
+echo Moving out of stage2 and creating image.
 echo
 sleep 2s
 

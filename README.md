@@ -62,7 +62,7 @@ Distribution
 Distro:		# Supported: debian, devuan and ubuntu
 Release:	# Debian: buster, bullseye, testing, unstable and sid
 		# Devuan: beowulf, testing, unstable and ceres
-		# Ubuntu: focal, groovy and hirsute
+		# Ubuntu: focal and hirsute
 
 Customize (user defconfig)
 Defconfig:	# 1 to enable
@@ -86,7 +86,7 @@ Distribution
 Distro:		# Supported: debian, devuan and ubuntu
 Release:	# Debian: buster, bullseye, testing, unstable and sid
 		# Devuan: beowulf, testing, unstable and ceres
-		# Ubuntu: focal, groovy and hirsute
+		# Ubuntu: focal and hirsute
 
 Customize (user defconfig)
 Defconfig:	# 1 to enable
