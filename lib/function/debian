@@ -423,5 +423,5 @@ update-rc.d firstboot defaults 2
 systemctl enable firstboot
 systemctl enable credentials
 systemctl enable governor
-systemctl enable serial-getty@ttyUSB0.service
+#systemctl enable serial-getty@ttyUSB0.service
 }
