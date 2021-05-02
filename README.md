@@ -62,7 +62,7 @@ Distributions
 Release:	# Supported: buster, beowulf and 20.04.2
 Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
 Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
-Ubuntu:		# 1 to select (20.04.1/20.04.2/20.10)
+Ubuntu:		# 1 to select (20.04.2/21.04)
 
 Filesystem
 ext4:		# 1 to select (default)
@@ -90,7 +90,7 @@ Distributions
 Release:	# Supported: buster, beowulf and 20.04.2
 Debian:		# 1 to select (buster/bullseye/testing/unstable/sid)
 Devuan:		# 1 to select (beowulf/testing/unstable/ceres)
-Ubuntu:		# 1 to select (20.04.1/20.04.2/20.10)
+Ubuntu:		# 1 to select (20.04.2/21.04)
 
 Filesystem
 ext4:		# 1 to select (default)
