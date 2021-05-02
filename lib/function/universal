@@ -49,9 +49,6 @@ echo "root:toor" | chpasswd
 bcm2711_eeprom(){
 echo
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-echo Checking for updates.
-apt update
-echo
 echo Installing rpi-eeprom.
 sleep 1s
 apt install help2man rsync pciutils -y
