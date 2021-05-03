@@ -238,10 +238,6 @@ fi
 
 admin_config
 
-if `grep -Fx "bcm2711" "/root/soc.txt" >/dev/null;`
-	then admin_eeprom
-fi
-
 ### Clean misc files
 rm -f *.patch
 rm -f *led*

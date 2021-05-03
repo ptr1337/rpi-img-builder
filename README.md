@@ -222,7 +222,6 @@ files, whilst leaving rename_to_credentials.txt untouched.
 Raspberry Pi 4B EEPROM Helper Script
 Usage: deb-eeprom -opt
 
-   -v       Edit version variable
    -U       Upgrade eeprom package
    -w       Setup and install usb boot
    -u       Update script
