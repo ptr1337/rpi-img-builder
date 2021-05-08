@@ -20,13 +20,13 @@ mv -f firmware-nonfree-master.tar.gz firmware/
 
 rename_image(){
 source kernel.txt
-mv -f ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
+mv -f ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${FSTYPE}-${IMAGE_DATE}.img
 }
 
 compress_image(){
 source kernel.txt
-mv -f ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
-xz -zev --threads=${CORES} ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${IMAGE_DATE}.img
+mv -f ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${IMAGE_DATE}.img ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${FSTYPE}-${IMAGE_DATE}.img
+xz -zev --threads=${CORES} ${DEVICE_SOC}-ubuntu-${DISTRO_VERSION}-${INSTALLED_KERNEL}-${FSTYPE}-${IMAGE_DATE}.img
 }
 
 # STAGE 2
