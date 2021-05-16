@@ -221,7 +221,7 @@ For headless use: ssh user@ipaddress
 
 ```sh
 Raspberry Pi 4B EEPROM Helper Script
-Usage: deb-eeprom -opt
+Usage: deb-eeprom -h
 
    -U       Upgrade eeprom package
    -w       Transfer to USB	# Supported: EXT4, BTRFS and F2FS
@@ -243,7 +243,7 @@ swh -h
 ```
 #### CPU frequency scaling
 ```sh
-Usage: governor -opt
+Usage: governor -h
 
    -c       Conservative
    -o       Ondemand
