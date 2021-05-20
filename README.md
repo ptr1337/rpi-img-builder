@@ -22,10 +22,6 @@ This has been tested on an AMD64/x86_64 system running on Debian Buster and Devu
 
 Alternatively, you can run the command `make ccompile` in this directory.
 
-## Docker
-
-To build using [Docker](https://www.docker.com/), follow the install [instructions](https://docs.docker.com/engine/install/) and use our other [builder](https://github.com/pyavitz/arm-img-builder).
-
 ---
 
 ## Instructions
