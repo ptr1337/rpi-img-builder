@@ -1,3 +1,4 @@
+# Depreciated
 ## Image Builder for the Raspberry Pi | Xfce Edition
 ### This branch is under testing so build at ur own risk.
 
@@ -149,8 +150,3 @@ Usage: governor -opt
 A service runs 'governor -r' during boot.
 ```
 
----
-
-### Support
-
-Should you come across any bugs, feel free to either open an issue on GitHub or talk with us directly by joining our channel on Freenode; [`#debianarm-port`](irc://irc.freenode.net/#debianarm-port)
