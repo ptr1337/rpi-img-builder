@@ -19,7 +19,7 @@ tar -xf ${DISTRO}-${DISTRO_VERSION}-rootfs-armel.tar.xz -C p2/
 armhf_rootfs(){
 if ls ${DISTRO}-${DISTRO_VERSION}-rootfs-armhf.tar.xz > /dev/null 2>&1
 	then echo && echo -n "Extracting rootfs " && armhf_extract && echo_bdone;
-	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
+	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && make cleanup && exit;
 fi
 echo
 }
@@ -27,7 +27,7 @@ echo
 armel_rootfs(){
 if ls ${DISTRO}-${DISTRO_VERSION}-rootfs-armel.tar.xz > /dev/null 2>&1
 	then echo && echo -n "Extracting rootfs " && armel_extract && echo_bdone;
-	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
+	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && make cleanup && exit;
 fi
 echo
 }
