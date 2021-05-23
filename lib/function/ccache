@@ -1,4 +1,4 @@
-gcc_version(){
+ccache_version(){
 # debian and devuan
 case `grep -Fx 'DISTRO_VERSION="buster"' "userdata.txt" >/dev/null; echo $?` in
   0)
