@@ -6,16 +6,9 @@ tar -xf ubuntu-base-${DISTRO_VERSION}-base-aarch64.tar.gz -C p2/
 aarch64_rootfs(){
 if ls ubuntu-base-${DISTRO_VERSION}-base-aarch64.tar.gz > /dev/null 2>&1
 	then echo && echo -n "Extracting rootfs " && aarch64_extract && echo_bdone;
-	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
+	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && make cleanup && exit;
 fi
 echo
-}
-
-rpi-firmware(){
-aria2c -c --download-result=hide --console-log-level=error \
---disable-ipv6=true --summary-interval=0 --show-files=false \
-https://github.com/RPi-Distro/firmware-nonfree/archive/master.tar.gz
-mv -f firmware-nonfree-master.tar.gz firmware/
 }
 
 rename_image(){
@@ -34,7 +27,7 @@ apt_preferences(){
 echo
 echo Blacking listing packages.
 tee /etc/apt/preferences <<EOF
-Package: rpi-eeprom linux-firmware-raspi2 pi-bluetooth raspberrypi-sys-mods
+Package: rpi-eeprom linux-firmware linux-firmware-raspi2 pi-bluetooth raspberrypi-sys-mods
 Pin: release o=Ubuntu
 Pin-Priority: 1
 EOF
