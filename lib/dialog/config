@@ -29,7 +29,7 @@ VALUES=$(dialog --ok-label "Submit" --no-cancel \
 	"Enable root:"	3 1	"$rootpasswd"  		3 14 2 0 \
 	""		4 1	""	 		4 14 0 0 \
 	"Linux kernel"	5 1	""	 		5 14 0 0 \
-        "Branch:"   	6 1     "$VERSION"        	6 9 7 0 \
+	"Branch:"   	6 1     "$VERSION"        	6 9 7 0 \
 	"Menuconfig:"	7 1	"$menuconfig"  		7 13 2 0 \
 	"Crosscompile:" 8 1	"$crosscompile" 	8 15 2 0 \
 	""		9 1	""	 		9 14 0 0 \
@@ -64,7 +64,7 @@ echo MYCONFIG='"' >> tmp0
 echo userscripts=0 >> tmp0
 echo verbose=0 >> tmp0
 echo rpiuser=1 >> tmp0
-echo builder=3.8 >> tmp0
+echo builder=3.9 >> tmp0
 echo '"' > tmp2
 echo '"' >> tmp2
 echo >> tmp2

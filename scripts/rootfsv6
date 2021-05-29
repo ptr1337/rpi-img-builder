@@ -34,15 +34,20 @@ fi
 validation
 
 devuan_rootfs(){
-DEVUAN_RELEASE=devuan-${DISTRO_VERSION}-rootfs-armel.tar.xz
-if ls $DEVUAN_RELEASE > /dev/null 2>&1; then exit; 
-	else : ;
+URL="https://github.com/pyavitz/rootfs-tarballs/releases/download/rootfs/"
+DOWNLOAD="aria2c -c --download-result=hide --console-log-level=error --disable-ipv6=true --summary-interval=0 --show-files=false"
+DEVUAN_RELEASE="devuan-${DISTRO_VERSION}-rootfs-armel.tar.xz"
+if ls ${DEVUAN_RELEASE} > /dev/null 2>&1; then exit; 
+	else :;
 fi
-wget -cq --show-progress https://github.com/pyavitz/rootfs-tarballs/releases/download/rootfs/devuan-${DISTRO_VERSION}-rootfs-armel.tar.xz
+if [[ `wget -S --spider ${URL}${DEVUAN_RELEASE} 2>&1 | grep 'HTTP/1.1 200 OK'` ]];
+	then echo -e "ROOTFS Found ..." && ${DOWNLOAD} ${URL}${DEVUAN_RELEASE} && echo -e " Done." && exit;
+	else echo -e "Are you kidding me? Check the userdata file." && exit;
+fi
 }
 
 if `grep -Fx "devuan=1" "userdata.txt" > /dev/null 2>&1;`
-	then devuan_rootfs && exit;
+	then devuan_rootfs;
 fi
 if `grep -Fx "ubuntu=1" "userdata.txt" >/dev/null;`
 	then echo -e "${YLW}Ubuntu is not supported${FIN}." && exit;

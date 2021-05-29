@@ -22,7 +22,7 @@ VALUES=$(dialog --ok-label "Submit" --no-cancel \
 	  --form "Choose:" \
 0 40 0 \
 	"Linux kernel"	1 1	""	 		1 14 0 0 \
-        "Branch:"   	2 1     "$VERSION"        	2 9 7 0 \
+	"Branch:"   	2 1     "$VERSION"        	2 9 7 0 \
 	"Menuconfig:"	3 1	"$menuconfig"  		3 13 2 0 \
 	"Crosscompile:" 4 1	"$crosscompile" 	4 15 2 0 \
 	""		5 1	""	 		5 14 0 0 \
@@ -54,7 +54,7 @@ echo MYCONFIG='"' >> tmp0
 echo userscripts=0 >> tmp0
 echo verbose=0 >> tmp0
 echo admin=1 >> tmp0
-echo builder=3.8 >> tmp0
+echo builder=3.9 >> tmp0
 echo '"' >> tmp2
 echo >> tmp2
 echo >> tmp2
