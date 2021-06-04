@@ -52,11 +52,6 @@ ${user} ALL=(ALL) NOPASSWD: ALL
 EOF
 }
 
-rpi_eeprom(){
-mv -f /etc/opt/eeprom /home/${user}/.eeprom
-chown -R ${user}:${user} /home/${user}/.eeprom
-}
-
 user_bin(){
 unzip -qq /etc/opt/user-bin.zip -d /home/${user}/
 rm -f /etc/opt/user-bin.zip
@@ -68,7 +63,6 @@ case `grep -Fx "bcm2711" "/etc/opt/soc.txt" >/dev/null; echo $?` in
   0)
 	bcm2711_user
 	create_sudoers
-	rpi_eeprom
 	user_skins
 	user_bin
     ;;
