@@ -15,7 +15,8 @@ sudo apt install \
 	build-essential bison bc git dialog patch dosfstools zip unzip qemu debootstrap \
 	qemu-user-static rsync kmod cpio flex libssl-dev libncurses5-dev parted fakeroot \
 	swig aria2 pv toilet figlet distro-info-data lsb-release xz-utils curl e2fsprogs \
-	btrfs-progs kpartx crossbuild-essential-arm64 crossbuild-essential-armel make libelf-dev
+	btrfs-progs xfsprogs kpartx crossbuild-essential-arm64 crossbuild-essential-armel \
+	make libelf-dev
 ```
 
 This has been tested on an AMD64/x86_64 system running on Debian Buster and Devuan Beowulf.
@@ -63,6 +64,7 @@ Ubuntu:		# 1 to select (20.04.2/21.04)
 Filesystem
 ext4:		# 1 to select (default)
 btrfs:		# 1 to select
+xfs:		# 1 to select
 
 Customize (user defconfig)
 Defconfig:	# 1 to enable
@@ -91,6 +93,7 @@ Ubuntu:		# 1 to select (20.04.2/21.04)
 Filesystem
 ext4:		# 1 to select (default)
 btrfs:		# 1 to select
+xfs:		# 1 to select
 
 Customize (user defconfig)
 Defconfig:	# 1 to enable
