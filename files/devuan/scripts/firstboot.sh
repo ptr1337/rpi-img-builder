@@ -1,33 +1,33 @@
 #!/bin/bash
 ### Functions
 grow_mmcblk(){
-bash growpart /dev/mmcblk0 2 > /dev/null 2>&1
+/bin/bash growpart /dev/mmcblk0 2 > /dev/null 2>&1
 sleep 1s
 resize2fs /dev/mmcblk0p2 > /dev/null 2>&1
 }
 
 grow_mmcblk1(){
-bash growpart /dev/mmcblk1 2 > /dev/null 2>&1
+/bin/bash growpart /dev/mmcblk1 2 > /dev/null 2>&1
 sleep 1s
 resize2fs /dev/mmcblk1p2 > /dev/null 2>&1
 }
 
 grow_sda(){
-bash growpart /dev/sda 2 > /dev/null 2>&1
+/bin/bash growpart /dev/sda 2 > /dev/null 2>&1
 sleep 1s
 resize2fs /dev/sda2 > /dev/null 2>&1
 }
 
 chk_mmcblk(){
-bash fsck.fat -trawl /dev/mmcblk0p1 > /dev/null 2>&1
+/bin/bash fsck.fat -trawl /dev/mmcblk0p1 > /dev/null 2>&1
 }
 
 chk_mmcblk1(){
-bash fsck.fat -trawl /dev/mmcblk1p1 > /dev/null 2>&1
+/bin/bash fsck.fat -trawl /dev/mmcblk1p1 > /dev/null 2>&1
 }
 
 chk_sda(){
-bash fsck.fat -trawl /dev/sda1 > /dev/null 2>&1
+/bin/bash fsck.fat -trawl /dev/sda1 > /dev/null 2>&1
 }
 
 partition_uuid(){
