@@ -195,6 +195,9 @@ gpu_mem=128
 # enable audio (loads snd_bcm2835)
 dtparam=audio=on
 
+# disable hdmi audio
+dtoverlay=disable-hdmi-audio
+
 # enable uart
 enable_uart=0
 
@@ -296,6 +299,9 @@ gpu_mem=128
 
 # enable audio (loads snd_bcm2835)
 dtparam=audio=on
+
+# disable hdmi audio
+dtoverlay=disable-hdmi-audio
 
 # enable uart
 enable_uart=0

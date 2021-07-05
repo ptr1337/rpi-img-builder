@@ -1,0 +1,28 @@
+#!/bin/bash
+
+### FUNCTION
+create_overlay(){
+echo -e "Creating disable-hdmi-audio overlay."
+cat << '_EOF_' > /boot/overlays/disable-hdmi-audio.dts
+/dts-v1/;
+/plugin/;
+
+/ {
+  compatible = "brcm,bcm2835";
+  fragment@0 {
+    target = <&audio>;
+    __overlay__ {
+      brcm,disable-hdmi = <1>;
+    };
+  };
+};
+_EOF_
+dtc -I dts -O dtb -o /boot/overlays/disable-hdmi-audio.dtbo /boot/overlays/disable-hdmi-audio.dts
+rm -f /boot/overlays/disable-hdmi-audio.dts
+}
+
+### RUN
+if ls /boot/overlays/disable-hdmi-audio.dtbo > /dev/null 2>&1;
+	then :;
+	else create_overlay;
+fi
