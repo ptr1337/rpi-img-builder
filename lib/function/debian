@@ -37,18 +37,11 @@ tar -xf ${DISTRO}-${DISTRO_VERSION}-rootfs-aarch64.tar.xz -C p2/
 }
 
 aarch64_rootfs(){
-if ls ${DISTRO}-${DISTRO_VERSION}-rootfs-aarch64.tar.xz > /dev/null 2>&1
+if [ -e ${DISTRO}-${DISTRO_VERSION}-rootfs-aarch64.tar.xz ];
 	then echo && echo -n "Extracting rootfs " && aarch64_extract && echo_bdone;
 	else echo && echo -e "${YLW}Missing rootfs tarball${FIN}!" && exit;
 fi
 echo
-}
-
-rpi-firmware(){
-aria2c -c --download-result=hide --console-log-level=error \
---disable-ipv6=true --summary-interval=0 --show-files=false \
-https://github.com/RPi-Distro/firmware-nonfree/archive/master.tar.gz
-mv -f firmware-nonfree-master.tar.gz firmware/
 }
 
 rename_image(){
@@ -117,11 +110,11 @@ echo Creating actled switch.
 tee /usr/local/sbin/actled <<EOF
 #!/bin/bash
 # activity led switch
-rpi_switch (){
+rpi_switch(){
 sh -c 'echo 0 > /sys/devices/platform/leds/leds/led0/brightness'
 }
 
-if ls /sys/devices/platform/leds/leds/led0/brightness > /dev/null 2>&1;
+if [ -e /sys/devices/platform/leds/leds/led0/brightness ];
 	then rpi_switch;
 fi
 
@@ -132,11 +125,11 @@ echo Creating pwrled switch.
 tee /usr/local/sbin/pwrled <<EOF
 #!/bin/bash
 # power led switch
-rpi_switch (){
+rpi_switch(){
 sh -c 'echo 0 > /sys/devices/platform/leds/leds/led1/brightness'
 }
 
-if ls /sys/devices/platform/leds/leds/led1/brightness > /dev/null 2>&1;
+if [ -e /sys/devices/platform/leds/leds/led1/brightness ];
 	then rpi_switch;
 fi
 
