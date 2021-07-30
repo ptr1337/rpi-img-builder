@@ -22,7 +22,4 @@ rm -f /boot/overlays/disable-hdmi-audio.dts
 }
 
 ### RUN
-if ls /boot/overlays/disable-hdmi-audio.dtbo > /dev/null 2>&1;
-	then :;
-	else create_overlay;
-fi
+if [ -e /boot/overlays/disable-hdmi-audio.dtbo ]; then :; else create_overlay; fi
